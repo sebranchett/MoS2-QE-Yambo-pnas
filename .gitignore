@@ -1,0 +1,9 @@
+*.run
+*.out
+*.UPF
+*.wfc*
+*.xml
+*.bands*
+*.save/
+*orig*
+
