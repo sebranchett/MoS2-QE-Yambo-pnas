@@ -42,7 +42,7 @@ cd "$WORKDIR"
 # DFT with Quantum Espresso
 mkdir -p output
 # scf
-# srun pw.x < mos2-scf.in > output/mos2-scf.out
+srun pw.x < mos2-scf.in > output/mos2-scf.out
 # nscf
 # srun pw.x < mos2-nscf.in > output/mos2-nscf.out
 # bands
@@ -51,4 +51,5 @@ srun pw.x < mos2-bands.in > output/mos2-bands.out
 srun bands.x < mos2-bands-bands.in > output/mos2-bands-bands.out
 # plotband
 srun plotband.x < mos2-plotband.in > output/mos2-plotband.out
+srun ps2pdf MoS2.bands.ps
 
