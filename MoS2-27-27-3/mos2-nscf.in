@@ -1,0 +1,43 @@
+&control
+    calculation   = 'nscf',
+    prefix        = 'MoS2',
+    wf_collect    = .true.,
+    pseudo_dir    = '../MoS2',
+/
+
+&system
+    ibrav           = 0,
+    nat             = 6,
+    ntyp            = 2,
+    ecutwfc         = 100.0,
+    vdw_corr        = 'Grimme-D2'
+    nbnd            = 72,
+    noncolin        = .true.
+    lspinorb        = .true.
+/
+
+&electrons
+/
+
+&ions
+/
+
+ATOMIC_SPECIES
+    Mo 97.905406 'Mo.rel-pbe-spn-kjpaw_psl.0.2.UPF'
+    S 31.972070 'S.rel-pbe-n-kjpaw_psl.0.1.UPF'
+
+ATOMIC_POSITIONS angstrom
+    Mo      -0.000000449   1.842989702   3.102116604
+    Mo       1.596076126   0.921494463   9.306349813
+    S        1.596081426   0.921491403   1.544213735
+    S        1.596081426   0.921491403   4.660019473
+    S       -0.000005749   1.842992762   7.748446945
+    S       -0.000005749   1.842992762  10.864252682
+
+CELL_PARAMETERS angstrom
+   3.192161542  -0.000000353  0.000000000
+   -1.596081076  2.764492811  0.000000000
+   0.000000000  0.000000000  12.408466410
+
+K_POINTS automatic
+  27 27 3 0 0 0
