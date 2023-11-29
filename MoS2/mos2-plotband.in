@@ -1,6 +1,6 @@
-si.bands
--3.0 3.0
-si.bands.xmgr
-si.bands.ps
+MoS2.bands
+8.1366 13.636
+MoS2.bands.gnuplot
+MoS2.bands.ps
 0.0
-1.0 0.0
+1.0 10.6366
