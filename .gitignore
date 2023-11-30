@@ -6,5 +6,6 @@
 *.xml
 *.bands*
 *.save/
+SAVE/
 *orig*
 
