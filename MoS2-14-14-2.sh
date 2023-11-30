@@ -46,3 +46,7 @@ srun pw.x < mos2-scf.in > output/mos2-scf.out
 # nscf
 srun pw.x < mos2-nscf.in > output/mos2-nscf.out
 
+# Convert Quantum Espresso output to Yambo input
+cd MoS2.save
+srun p2y > ../output/mos2-p2y.out
+
