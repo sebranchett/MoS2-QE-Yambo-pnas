@@ -3,11 +3,11 @@
 #SBATCH --job-name=MoS2
 #SBATCH --partition=compute
 #SBATCH --account=innovation
-#SBATCH --time=01:00:00
+#SBATCH --time=02:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=3GB
+#SBATCH --mem-per-cpu=10GB
 
 # find your account with:
 # sacctmgr list -sp user $USER
@@ -45,4 +45,8 @@ mkdir -p output
 srun pw.x < mos2-scf.in > output/mos2-scf.out
 # nscf
 srun pw.x < mos2-nscf.in > output/mos2-nscf.out
+
+# Convert Quantum Espresso output to Yambo input
+cd MoS2.save
+srun p2y > ../output/mos2-p2y.out
 
