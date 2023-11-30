@@ -14,9 +14,11 @@
     nbnd            = 72,
     noncolin        = .true.
     lspinorb        = .true.
+    force_symmorphic  =.true.
 /
 
 &electrons
+    diago_full_acc  =.true.
 /
 
 &ions
