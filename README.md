@@ -7,5 +7,5 @@ Quantum Espresso input created following this tutorial: https://flex.phys.tohoku
 
 Pseudo-potentials downloaded from here: http://www.quantum-simulation.org/potentials/sg15_oncv/upf/.
 
-Yambo input created following this tutorial: https://www.yambo-code.eu/wiki/index.php/LiF
+Yambo input created following this tutorial: https://www.yambo-code.eu/wiki/index.php/LiF.
 

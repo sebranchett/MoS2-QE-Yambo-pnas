@@ -6,6 +6,7 @@
 *.xml
 *.bands*
 *.save/
-SAVE/
 *orig*
+SAVE/
+output/
 
