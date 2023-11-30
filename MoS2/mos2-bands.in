@@ -23,8 +23,8 @@
 /
 
 ATOMIC_SPECIES
-    Mo 97.905406 'Mo.rel-pbe-spn-kjpaw_psl.0.2.UPF'
-    S 31.972070 'S.rel-pbe-n-kjpaw_psl.0.1.UPF'
+    Mo 97.905406 'Mo_ONCV_PBE-1.2.upf'
+    S 31.972070 'S_ONCV_PBE-1.2.upf'
 
 ATOMIC_POSITIONS angstrom
     Mo      -0.000000449   1.842989702   3.102116604
