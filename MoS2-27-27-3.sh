@@ -3,11 +3,11 @@
 #SBATCH --job-name=MoS2
 #SBATCH --partition=compute
 #SBATCH --account=innovation
-#SBATCH --time=12:30:00
+#SBATCH --time=01:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=10GB
+#SBATCH --mem-per-cpu=3GB
 
 # find your account with:
 # sacctmgr list -sp user $USER
