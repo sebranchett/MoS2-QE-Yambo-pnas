@@ -8,5 +8,7 @@
 *.save/
 *orig*
 SAVE/
+LOG/
 output/
+r_*
 
