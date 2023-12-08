@@ -1,0 +1,18 @@
+#                                                                     
+#  /$$     /$$ /$$$$$$  /$$      /$$ /$$$$$$$   /$$$$$$               
+# |  $$   /$$//$$__  $$| $$$    /$$$| $$__  $$ /$$__  $$              
+#  \  $$ /$$/| $$  \ $$| $$$$  /$$$$| $$  \ $$| $$  \ $$              
+#   \  $$$$/ | $$$$$$$$| $$ $$/$$ $$| $$$$$$$ | $$  | $$              
+#    \  $$/  | $$__  $$| $$  $$$| $$| $$__  $$| $$  | $$              
+#     | $$   | $$  | $$| $$\  $ | $$| $$  \ $$| $$  | $$              
+#     | $$   | $$  | $$| $$ \/  | $$| $$$$$$$/|  $$$$$$/              
+#     |__/   |__/  |__/|__/     |__/|_______/  \______/               
+#                                                                     
+# Version 5.1.2 Revision 21871 Hash (prev commit) 8eb9fde4a           
+#                     Branch is main                                  
+#                 MPI+HDF5_MPI_IO Build                               
+#               http://www.yambo-code.org                             
+#
+setup                            # [R] Initialization
+MaxGvecs=  99839           RL    # [INI] Max number of G-vectors planned to use
+Gthresh= 0.100000E-4             # [INI] Accuracy for energy shell separation [-1. automatic]
