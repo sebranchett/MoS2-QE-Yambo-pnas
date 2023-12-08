@@ -3,7 +3,7 @@
 #SBATCH --job-name=MoS2
 #SBATCH --partition=compute
 #SBATCH --account=innovation
-#SBATCH --time=00:30:00
+#SBATCH --time=11:30:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=1
@@ -56,7 +56,5 @@ cd "$WORKDIR"
 
 # Initialisation file created on command line with: yambo -i -V RL
 # srun yambo -F init.in -J output/init.out
-# Generate Statically screened Electron-electron interaction input
-# from command line with: yambo -X s
-srun yambo electron-electron.in
+srun yambo gwppa.in
 
