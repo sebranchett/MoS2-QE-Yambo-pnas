@@ -37,7 +37,7 @@ XTermKind= "none"                # [X] X terminator ("none","BG" Bruneval-Gonze)
 GTermKind= "BG"                  # [GW] GW terminator ("none","BG" Bruneval-Gonze,"BRS" Berger-Reining-Sottile) - todo changed manually to BG
 DysSolver= "n"                   # [GW] Dyson Equation solver ("n","s","g")
 %QPkrange                        # [GW] QP generalized Kpoint/Band indices
-1|48|1|72|
+1|211|1|72|
 %
 
 X_all_q_ROLEs= "q k c v"         # [PARALLEL] CPUs roles (q,k,c,v)

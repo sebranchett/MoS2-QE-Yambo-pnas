@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=MoS2
+#SBATCH --job-name=MoS2_27
 #SBATCH --partition=compute
 #SBATCH --account=innovation
 #SBATCH --time=23:30:00
@@ -36,7 +36,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$YAMBODIR/lib
 # Input file generated using AMS for Quantum Espresso
 # Pseudopotentials from https://www.physics.rutgers.edu/gbrv/
 
-WORKDIR=${PWD}/MoS2-14-14-2
+WORKDIR=${PWD}/MoS2-27-27-3
 cd "$WORKDIR"
 
 # DFT with Quantum Espresso
@@ -52,11 +52,15 @@ cd "$WORKDIR"
 # cd ..
 
 # Copy the converted Qantum Espresso DFT data
-# srun cp -rf MoS2.save/SAVE SAVE
+# srun -n1 cp -rf MoS2.save/SAVE SAVE
 
-# Initialisation file created on command line with: yambo -i -V RL
+# Create initialisation file with:
+# srun -n1 yambo -i -V RL -F init.in
+# and run it:
 # srun yambo -F init.in -J output/init.out
-# Run GW calculation, input created with: yambo -p p -F gwppa.in
-# and then changed manually
+
+# Create GW input file with:
+# srun -n1 yambo -p p -F gwppa.in
+# Changed manually and then run:
 srun yambo -F gwppa.in -J output/gwppa.out
 
