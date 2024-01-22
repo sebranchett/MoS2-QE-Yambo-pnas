@@ -9,3 +9,4 @@ Pseudo-potentials downloaded from here: http://www.quantum-simulation.org/potent
 
 Yambo input created following this tutorial: https://www.yambo-code.eu/wiki/index.php/LiF.
 
+The runs with 5-5-2 in the title are on a 5 x 5 x 2 k-point grid, instead of the 27 × 27 × 3 k-point grid used in the article. The 5-5-2 results are less accurate, but the calculations run much faster. This is useful for testing.
