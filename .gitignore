@@ -12,6 +12,9 @@ LOG/
 output/
 r_*
 init.in
+ypp_bands.in
 CRASH
 *.data
+l_*
+o.*
 
