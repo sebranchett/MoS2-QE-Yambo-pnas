@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=MoS2-small
+#SBATCH --job-name=MoS2-5-5-2
 #SBATCH --partition=compute
 #SBATCH --account=innovation
 #SBATCH --time=23:30:00
@@ -36,7 +36,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$YAMBODIR/lib
 # Input file generated using AMS for Quantum Espresso
 # Pseudopotentials from https://www.physics.rutgers.edu/gbrv/
 
-WORKDIR=${PWD}/small
+WORKDIR=${PWD}/MoS2-5-5-2
 cd "$WORKDIR"
 
 # DFT with Quantum Espresso
