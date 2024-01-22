@@ -12,4 +12,6 @@ LOG/
 output/
 r_*
 init.in
+CRASH
+*.data
 
