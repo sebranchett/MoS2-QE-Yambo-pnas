@@ -3,11 +3,11 @@
 #SBATCH --job-name=MoS2
 #SBATCH --partition=compute
 #SBATCH --account=innovation
-#SBATCH --time=00:30:00
+#SBATCH --time=23:30:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks-per-node=8
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=1GB
+#SBATCH --mem-per-cpu=10GB
 
 # find your account with:
 # sacctmgr list -sp user $USER
@@ -40,13 +40,23 @@ WORKDIR=${PWD}/MoS2-14-14-2
 cd "$WORKDIR"
 
 # DFT with Quantum Espresso
-mkdir -p output
+# mkdir -p output
 # scf
-srun pw.x < mos2-scf.in > output/mos2-scf.out
+# srun pw.x < mos2-scf.in > output/mos2-scf.out
 # nscf
-srun pw.x < mos2-nscf.in > output/mos2-nscf.out
+# srun pw.x < mos2-nscf.in > output/mos2-nscf.out
 
 # Convert Quantum Espresso output to Yambo input
-cd MoS2.save
-srun p2y > ../output/mos2-p2y.out
+# cd MoS2.save
+# srun p2y > ../output/mos2-p2y.out
+# cd ..
+
+# Copy the converted Qantum Espresso DFT data
+# srun cp -rf MoS2.save/SAVE SAVE
+
+# Initialisation file created on command line with: yambo -i -V RL
+# srun yambo -F init.in -J output/init.out
+# Run GW calculation, input created with: yambo -p p -F gwppa.in
+# and then changed manually
+srun yambo -F gwppa.in -J output/gwppa.out
 
