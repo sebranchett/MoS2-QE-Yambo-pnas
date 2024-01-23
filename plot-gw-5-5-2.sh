@@ -42,6 +42,8 @@ cd "$WORKDIR"
 # Following step 3 of this tutorial to draw band structures
 # https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN
 
+# clean up to be sure
+rm ypp_bands.in
 # create ypp input
 srun -n1 ypp -s b -F ypp_bands.in
 # edit number of bands
