@@ -9,8 +9,14 @@ Pseudo-potentials downloaded from here: http://www.quantum-simulation.org/potent
 
 Yambo input created following this tutorial: https://www.yambo-code.eu/wiki/index.php/LiF.
 
-Yambo band structure plots created following step 3 of this tutorial: https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN
+In addition, this tutorial was helpful for the Yambo GW  calcuation and band structure plots: https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN
 
-Information on running in parallel can be found here: https://www.yambo-code.eu/wiki/index.php/Using_Yambo_in_parallel and here: https://www.yambo-code.eu/wiki/index.php/Parallelization.
+In addition, these tutorials were helpful for the Yambo BSE calculation:
+* https://www.yambo-code.eu/wiki/index.php/Static_screening
+* https://www.yambo-code.eu/wiki/index.php/Bethe-Salpeter_kernel
+* (probably not https://www.yambo-code.eu/wiki/index.php/Bethe-Salpeter_solver:_diagonalization)
+* https://www.yambo-code.eu/wiki/index.php/Bethe-Salpeter_on_top_of_quasiparticle_energies
+
+Information on running Yambo in parallel can be found here: https://www.yambo-code.eu/wiki/index.php/Using_Yambo_in_parallel and here: https://www.yambo-code.eu/wiki/index.php/Parallelization.
 
 The runs with 5-5-2 in the title are on a 5 x 5 x 2 k-point grid, instead of the 27 × 27 × 3 k-point grid used in the article. The 5-5-2 results are less accurate, but the calculations run much faster. This is useful for testing.
