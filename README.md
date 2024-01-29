@@ -37,5 +37,4 @@ A. Marini, C. Hogan, M. Grüning, D. Varsano
 Computer Physics Communications 180, 1392 (2009).
 
 Please acknowledge DelftBlue by [adding a citation to Bibliograph](https://doc.dhpc.tudelft.nl/delftblue/Citing-DHPC) or adding the text:
-
-*"The authors acknowledge the use of computational resources of DelftBlue supercomputer, provided by Delft High Performance Computing Centre (https://www.tudelft.nl/dhpc)."*
+> "The authors acknowledge the use of computational resources of DelftBlue supercomputer, provided by Delft High Performance Computing Centre (https://www.tudelft.nl/dhpc)."
