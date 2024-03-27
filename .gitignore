@@ -17,4 +17,7 @@ CRASH
 *.data
 l_*
 o.*
+o-*
+r-*
+G0W0*
 
