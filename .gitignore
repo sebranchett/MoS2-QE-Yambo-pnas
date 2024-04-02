@@ -13,6 +13,7 @@ output/
 r_*
 init.in
 ypp_bands.in
+gwppa.in
 CRASH
 *.data
 l_*
