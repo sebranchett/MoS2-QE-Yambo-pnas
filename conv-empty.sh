@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=prb-convb
+#SBATCH --job-name=prb-conve
 #SBATCH --partition=compute
 #SBATCH --account=innovation
 #SBATCH --time=24:00:00
@@ -38,16 +38,18 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$YAMBODIR/lib
 WORKDIR=${PWD}/conv
 cd "$WORKDIR"
 
-# W bands convergence
+# Empty bands convergence
 sed -i "s|NGsBlkXp= 1                RL|NGsBlkXp= 3                Ry|" gwppa.in
-# rm -f G0W0_w_bands_convergence.dat
-for BndsRnXp in 100 150 200 250; do
-  sed -i "/BndsRnXp/{n;s|  1 . 252|  1 \| ${BndsRnXp}|}" gwppa.in
-#   rm -f o-G0W0_W_${BndsRnXp}_bands.qp
-  srun yambo -F gwppa.in -J G0W0_W_${BndsRnXp}_bands
-  grep "  53 " o-G0W0_W_${BndsRnXp}_bands.qp* | grep "  1  " | awk -v BndsRnXp="$BndsRnXp" '{print BndsRnXp " " $3+$4}' >> G0W0_w_bands_convergence.dat
-  # set back to 1 - 10
-  sed -i "/BndsRnXp/{n;s|  1 . ${BndsRnXp}|  1 \| 252|}" gwppa.in
+sed -i "/GbndRnge/i UseEbands" gwppa.in
+rm G0W0_empty_bands_convergence.dat
+for GbndRnge in 50 100 150 200 250; do
+  sed -i "/GbndRnge/{n;s|  1 . 252|  1 \| ${GbndRnge}|}" gwppa.in
+#   rm -f o-G0W0_W_${GbndRnge}_empty_bands.qp
+  srun yambo -F gwppa.in -J G0W0_W_${GbndRnge}_empty_bands
+  grep "  53 " o-G0W0_W_${GbndRnge}_empty_bands.qp* | grep "  1  " | awk -v GbndRnge="$GbndRnge" '{print GbndRnge " " $3+$4}' >> G0W0_empty_bands_convergence.dat
+  # set back to 1 - 252
+  sed -i "/GbndRnge/{n;s|  1 . ${GbndRnge}|  1 \| 252|}" gwppa.in
 done
 sed -i "s|NGsBlkXp= 3                Ry|NGsBlkXp= 1                RL|" gwppa.in
+sed -i "/UseEbands/d" gwppa.in
 
