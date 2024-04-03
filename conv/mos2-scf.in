@@ -11,7 +11,7 @@
     ntyp            = 2,
     ecutwfc         = 60.0,
     vdw_corr        = 'Grimme-D2'
-    nbnd            = 252,
+    nbnd            = 300,
     noncolin        = .true.
     lspinorb        = .true.
     force_symmorphic  =.true.

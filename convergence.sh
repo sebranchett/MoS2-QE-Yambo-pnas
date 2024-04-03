@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=prb-conv
+#SBATCH --job-name=prb-convergence
 #SBATCH --partition=compute
 #SBATCH --account=innovation
 #SBATCH --time=24:00:00
@@ -86,16 +86,59 @@ EOF
 # 2) Change parameters
 sed -i 's/GTermKind.*/GTermKind= "BG"                  # [GW] GW terminator ("none","BG" Bruneval-Gonze,"BRS" Berger-Reining-Sottile)/' gwppa.in
 
-# Test W size convergence
-rm G0W0_w_convergence.dat
-# NGsBlkXp= 1                RL
-for NGsBlkXp in 01 02 03 04 05; do
+# W size convergence
+rm -f G0W0_w_convergence.dat
+for NGsBlkXp in 01 02 03 04 05 06 07; do
   sed -i "s|NGsBlkXp= 1                RL|NGsBlkXp= ${NGsBlkXp}                 Ry|" gwppa.in
-#   rm -f o-G0W0_W_${NGsBlkXp}Ry.qp
   srun yambo -F gwppa.in -J G0W0_W_${NGsBlkXp}Ry
   grep "  53 " o-G0W0_W_${NGsBlkXp}Ry.qp | grep "  1  " | awk -v NGsBlkXp="$NGsBlkXp" '{print NGsBlkXp " " $3+$4}' >> G0W0_w_convergence.dat
   sed -i "s|NGsBlkXp= ..                 Ry|NGsBlkXp= 1                RL|" gwppa.in
 done
-# gnuplot "$WORKDIR"/G0W0_w_convergence.gnuplot
-# mv *.png "$WORKDIR"/Silicon/plots/
+
+gnuplot <<\EOF
+set terminal png size 500,400
+set output 'W_size_convervence_NGsBlkXs.png'
+set title 'W size convervence NGsBlkXs (Ry)'
+plot 'G0W0_w_convergence.dat' w lp
+EOF
+
+# W bands convergence
+sed -i "s|NGsBlkXp= 1                RL|NGsBlkXp= 3                Ry|" gwppa.in
+rm -f G0W0_w_bands_convergence.dat
+for BndsRnXp in 100 150 200 250 300; do
+  sed -i "/BndsRnXp/{n;s|  1 . 300|  1 \| ${BndsRnXp}|}" gwppa.in
+  srun yambo -F gwppa.in -J G0W0_W_${BndsRnXp}_bands
+  grep "  53 " o-G0W0_W_${BndsRnXp}_bands.qp* | grep "  1  " | awk -v BndsRnXp="$BndsRnXp" '{print BndsRnXp " " $3+$4}' >> G0W0_w_bands_convergence.dat
+  # set back to 1 - 10
+  sed -i "/BndsRnXp/{n;s|  1 . ${BndsRnXp}|  1 \| 300|}" gwppa.in
+done
+sed -i "s|NGsBlkXp= 3                Ry|NGsBlkXp= 1                RL|" gwppa.in
+
+gnuplot <<\EOF
+set terminal png size 500,400
+set output 'W_bands_convervence_BndsRnXs.png'
+set title 'W bands convervence BndsRnXs - NGsBlkXs=3Ry'
+plot 'conv/G0W0_w_bands_convergence.dat' w lp
+EOF
+
+# Empty bands convergence
+sed -i "s|NGsBlkXp= 1                RL|NGsBlkXp= 3                Ry|" gwppa.in
+sed -i "/GbndRnge/i UseEbands" gwppa.in
+rm -f G0W0_empty_bands_convergence.dat
+for GbndRnge in 50 100 150 200 250 300; do
+  sed -i "/GbndRnge/{n;s|  1 . 300|  1 \| ${GbndRnge}|}" gwppa.in
+  srun yambo -F gwppa.in -J G0W0_W_${GbndRnge}_empty_bands
+  grep "  53 " o-G0W0_W_${GbndRnge}_empty_bands.qp* | grep "  1  " | awk -v GbndRnge="$GbndRnge" '{print GbndRnge " " $3+$4}' >> G0W0_empty_bands_convergence.dat
+  # set back to 1 - 300
+  sed -i "/GbndRnge/{n;s|  1 . ${GbndRnge}|  1 \| 300|}" gwppa.in
+done
+sed -i "s|NGsBlkXp= 3                Ry|NGsBlkXp= 1                RL|" gwppa.in
+sed -i "/UseEbands/d" gwppa.in
+
+gnuplot <<\EOF
+set terminal png size 500,400
+set output 'W_empty_bands_convervence_GbndRnge.png'
+set title 'W empty bands convervence GbndRnge - NGsBlkXs=3Ry'
+plot 'conv/G0W0_empty_bands_convergence.dat' w lp
+EOF
 
