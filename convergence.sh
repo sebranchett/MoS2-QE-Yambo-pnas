@@ -97,8 +97,8 @@ done
 
 gnuplot <<\EOF
 set terminal png size 500,400
-set output 'W_size_convervence_NGsBlkXs.png'
-set title 'W size convervence NGsBlkXs (Ry)'
+set output 'W_size_convergence_NGsBlkXs.png'
+set title 'W size convergence NGsBlkXs (Ry)'
 plot 'G0W0_w_convergence.dat' w lp
 EOF
 
@@ -116,8 +116,8 @@ sed -i "s|NGsBlkXp= 3                Ry|NGsBlkXp= 1                RL|" gwppa.in
 
 gnuplot <<\EOF
 set terminal png size 500,400
-set output 'W_bands_convervence_BndsRnXs.png'
-set title 'W bands convervence BndsRnXs - NGsBlkXs=3Ry'
+set output 'W_bands_convergence_BndsRnXs.png'
+set title 'W bands convergence BndsRnXs - NGsBlkXs=3Ry'
 plot 'G0W0_w_bands_convergence.dat' w lp
 EOF
 
@@ -137,8 +137,8 @@ sed -i "/UseEbands/d" gwppa.in
 
 gnuplot <<\EOF
 set terminal png size 500,400
-set output 'W_empty_bands_convervence_GbndRnge.png'
-set title 'W empty bands convervence GbndRnge - NGsBlkXs=3Ry'
+set output 'W_empty_bands_convergence_GbndRnge.png'
+set title 'W empty bands convergence GbndRnge - NGsBlkXs=3Ry'
 plot 'G0W0_empty_bands_convergence.dat' w lp
 EOF
 
