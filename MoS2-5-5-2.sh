@@ -55,14 +55,14 @@ cd ..
 # Copy the converted Qantum Espresso DFT data
 srun -n1 cp -rf MoS2.save/SAVE SAVE
 
-# Create initialisation file with:
+# Create initialisation file
+rm -f init.in
 srun -n1 yambo -i -V RL -F init.in
-# Change parameters
-sed -i 's/MaxGvecs.*/MaxGvecs=  68              Ry    # [INI] Max number of G-vectors planned to use/' init.in
 # and run it:
 srun yambo -F init.in -J output/init.out
 
 # Create GW input file with:
+rm -f gwppa.in
 srun -n1 yambo -p p -F gwppa.in
 # Make changes to GW input file
 # 1) Change parameters
