@@ -3,15 +3,14 @@
 #SBATCH --job-name=MoS2-5-5-2
 #SBATCH --partition=compute
 #SBATCH --account=innovation
-#SBATCH --time=23:30:00
+#SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=24
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=4GB
+#SBATCH --mem=64GB
 
 # find your account with:
 # sacctmgr list -sp user $USER
-# #SBATCH --account=research-uco-ict
 
 module load 2023r1
 module load openmpi
@@ -58,6 +57,8 @@ srun -n1 cp -rf MoS2.save/SAVE SAVE
 
 # Create initialisation file with:
 srun -n1 yambo -i -V RL -F init.in
+# Change parameters
+sed -i 's/MaxGvecs.*/MaxGvecs=  68              Ry    # [INI] Max number of G-vectors planned to use/' init.in
 # and run it:
 srun yambo -F init.in -J output/init.out
 
@@ -68,17 +69,19 @@ srun -n1 yambo -p p -F gwppa.in
 sed -i 's/EXXRLvcs.*/EXXRLvcs=  68              Ry    # [XX] Exchange    RL components/' gwppa.in
 sed -i 's/VXCRLvcs.*/VXCRLvcs=  15              Ry    # [XC] XCpotential RL components/' gwppa.in
 sed -i 's/GTermKind.*/GTermKind= "BG"                  # [GW] GW terminator ("none","BG" Bruneval-Gonze,"BRS" Berger-Reining-Sottile)/' gwppa.in
+sed -i "s|NGsBlkXp.*|NGsBlkXp= 15               Ry    # [Xp] Response block size|" gwppa.in
+sed -i "/GbndRnge/i UseEbands" gwppa.in
 
 # 2) Add parallel directives
 cat >> gwppa.in << EOF
 
 # Dipoles
 DIP_ROLEs= "k c v"                             # CPUs roles (k,c,v)
-DIP_CPU= "2 $SLURM_NTASKS_PER_NODE $SLURM_NTASKS_PER_NODE"  # CPUs for each role
+DIP_CPU= "$SLURM_NTASKS_PER_NODE $SLURM_NTASKS_PER_NODE $SLURM_NTASKS_PER_NODE"  # CPUs for each role
 DIP_Threads= 0
 # Response functions
 X_all_q_ROLEs= "q g k c v"                     # CPUs roles (q,g,k,c,v)
-X_all_q_CPU= "2 2 2 $SLURM_NTASKS_PER_NODE $SLURM_NTASKS_PER_NODE"  # CPUs for each role
+X_all_q_CPU= "2 2 $SLURM_NTASKS_PER_NODE $SLURM_NTASKS_PER_NODE $SLURM_NTASKS_PER_NODE"  # CPUs for each role
 X_Threads= 0
 # Self-energy
 SE_ROLEs= "q qp b"                             # CPUs roles (q,qp,b)
@@ -89,4 +92,50 @@ EOF
 
 # G0W0
 srun yambo -F gwppa.in -J output/gwppa.out
+
+# Following step 3 of this tutorial to draw band structures
+# https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN
+
+# clean up to be sure
+rm -f ypp_bands.in
+# create ypp input
+srun -n1 ypp -s b -F ypp_bands.in
+# edit number of bands
+sed -i 's/ 1 | 252/50 |  59/' ypp_bands.in
+# add path in K-space
+sed -i '/%BANDS_kpts /a \ 0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |' ypp_bands.in
+# edit number of steps along path
+sed -i "s/10/30/" ypp_bands.in
+
+# ypp to interpolate DFT results
+srun ypp -F ypp_bands.in
+mv -f o.bands_interpolated o.bands_interpolated_dft
+
+# create ypp input for GW bands
+cat <<\EOF >> ypp_bands.in
+GfnQPdb= "E < ./output/gwppa.out/ndb.QP"
+EOF
+
+# ypp to interpolate GW results
+srun ypp -F ypp_bands.in
+mv -f o.bands_interpolated o.bands_interpolated_gw
+
+# DFT and bands
+gnuplot <<\EOF
+set terminal png size 500,400
+set output 'interpolated-5-2-2.png'
+set title 'DFT and GW bands along Gamma-Kappa path'
+plot 'o.bands_interpolated_dft' using 0:2 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:3 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:5 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:7 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:9 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:11 w l linetype 7, \
+     'o.bands_interpolated_gw' using 0:2 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:3 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:5 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:7 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:9 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:11 w l linetype -1
+EOF
 
