@@ -1,12 +1,12 @@
-#  __      __   ______   __       __  _______    ______               
-# |  \    /  \ /      \ |  \     /  \|       \  /      \              
-#  \$$\  /  $$|  $$$$$$\| $$\   /  $$| $$$$$$$\|  $$$$$$\             
-#   \$$\/  $$ | $$__| $$| $$$\ /  $$$| $$__/ $$| $$  | $$             
-#    \$$  $$  | $$    $$| $$$$\  $$$$| $$    $$| $$  | $$             
-#     \$$$$   | $$$$$$$$| $$\$$ $$ $$| $$$$$$$\| $$  | $$             
-#     | $$    | $$  | $$| $$ \$$$| $$| $$__/ $$| $$__/ $$             
-#     | $$    | $$  | $$| $$  \$ | $$| $$    $$ \$$    $$             
-#      \$$     \$$   \$$ \$$      \$$ \$$$$$$$   \$$$$$$              
+#                                                                     
+#   __   __     _        __  __       ____      U  ___  u             
+#   \ \ / / U  /"\  U u |" \/ "| u U | __") u    \/"_ \/              
+#    \ V /   \/ _ \/   \| |\/| |/   \|  _ \/     | | | |              
+#   U_|"|_u  / ___ \    | |  | |     | |_) | .-,_| |_| |              
+#     |_|   /_/   \_\   |_|  |_|     |____/   \_)-\___/               
+# .-,//|(_   \\    >>  <<,-,,-.     _|| \\_        \\                 
+#  \_) (__) (__)  (__)  (./  \.)   (__) (__)      (__)                
+#                                                                     
 #                                                                     
 # Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
 #                   Branch is parallel                                
@@ -24,11 +24,12 @@ Chimod= "HARTREE"                # [X] IP/Hartree/ALDA/LRC/PF/BSfxc
 % BndsRnXp
    1 | 102 |                         # [Xp] Polarization function bands
 %
-NGsBlkXp= 1                RL    # [Xp] Response block size
+NGsBlkXp= 15               Ry    # [Xp] Response block size
 % LongDrXp
  1.000000 | 0.000000 | 0.000000 |        # [Xp] [cc] Electric Field
 %
 PPAPntXp= 27.21138         eV    # [Xp] PPA imaginary energy
+UseEbands
 % GbndRnge
    1 | 102 |                         # [GW] G[W] bands range
 %
@@ -40,11 +41,11 @@ DysSolver= "n"                   # [GW] Dyson Equation solver ("n","s","g","q")
 
 # Dipoles
 DIP_ROLEs= "k c v"                             # CPUs roles (k,c,v)
-DIP_CPU= "2 24 24"  # CPUs for each role
+DIP_CPU= "24 24 24"  # CPUs for each role
 DIP_Threads= 0
 # Response functions
 X_all_q_ROLEs= "q g k c v"                     # CPUs roles (q,g,k,c,v)
-X_all_q_CPU= "2 2 2 24 24"  # CPUs for each role
+X_all_q_CPU= "2 2 24 24 24"  # CPUs for each role
 X_Threads= 0
 # Self-energy
 SE_ROLEs= "q qp b"                             # CPUs roles (q,qp,b)
