@@ -15,7 +15,7 @@ init.in
 ypp_bands.in
 gwppa.in
 CRASH
-*.data
+*.dat*
 l_*
 o.*
 o-*
