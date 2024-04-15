@@ -1,17 +1,17 @@
 #                                                                     
-#  __  __   ________   ___ __ __    _______   ______                  
-# /_/\/_/\ /_______/\ /__//_//_/\ /_______/\ /_____/\                 
-# \ \ \ \ \\::: _  \ \\::\| \| \ \\::: _  \ \\:::_ \ \                
-#  \:\_\ \ \\::(_)  \ \\:.      \ \\::(_)  \/_\:\ \ \ \               
-#   \::::_\/ \:: __  \ \\:.\-/\  \ \\::  _  \ \\:\ \ \ \              
-#     \::\ \  \:.\ \  \ \\. \  \  \ \\::(_)  \ \\:\_\ \ \             
-#      \__\/   \__\/\__\/ \__\/ \__\/ \_______\/ \_____\/             
+#                                                                     
+# Y88b    /   e           e    e      888~~\    ,88~-_                
+#  Y88b  /   d8b         d8b  d8b     888   |  d888   \               
+#   Y88b/   /Y88b       d888bdY88b    888 _/  88888    |              
+#    Y8Y   /  Y88b     / Y88Y Y888b   888  \  88888    |              
+#     Y   /____Y88b   /   YY   Y888b  888   |  Y888   /               
+#    /   /      Y88b /          Y888b 888__/    `88_-~                
 #                                                                     
 #                                                                     
 # Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
 #                   Branch is parallel                                
-#                  MPI+HDF5_MPI_IO Build                              
-#                http://www.yambo-code.org                            
+#                 MPI+HDF5_MPI_IO Build                               
+#               http://www.yambo-code.org                             
 #
 gw0                              # [R] GW approximation
 ppa                              # [R][Xp] Plasmon Pole Approximation for the Screened Interaction
@@ -24,11 +24,12 @@ Chimod= "HARTREE"                # [X] IP/Hartree/ALDA/LRC/PF/BSfxc
 % BndsRnXp
    1 | 102 |                         # [Xp] Polarization function bands
 %
-NGsBlkXp= 1                RL    # [Xp] Response block size
+NGsBlkXp= 15               Ry    # [Xp] Response block size
 % LongDrXp
  1.000000 | 0.000000 | 0.000000 |        # [Xp] [cc] Electric Field
 %
 PPAPntXp= 27.21138         eV    # [Xp] PPA imaginary energy
+UseEbands
 % GbndRnge
    1 | 102 |                         # [GW] G[W] bands range
 %
