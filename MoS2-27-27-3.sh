@@ -3,7 +3,7 @@
 #SBATCH --job-name=MoS2-27-27-3
 #SBATCH --partition=compute
 #SBATCH --account=research-as-cheme
-#SBATCH --time=72:00:00
+#SBATCH --time=120:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=24
 #SBATCH --cpus-per-task=1
@@ -55,18 +55,22 @@ cd ..
 # Copy the converted Qantum Espresso DFT data
 srun -n1 cp -rf MoS2.save/SAVE SAVE
 
-# Create initialisation file with:
+# Create initialisation file
+rm -f init.in
 srun -n1 yambo -i -V RL -F init.in
 # and run it:
 srun yambo -F init.in -J output/init.out
 
 # Create GW input file with:
+rm -f gwppa.in
 srun -n1 yambo -p p -F gwppa.in
 # Make changes to GW input file
 # 1) Change parameters
 sed -i 's/EXXRLvcs.*/EXXRLvcs=  68              Ry    # [XX] Exchange    RL components/' gwppa.in
 sed -i 's/VXCRLvcs.*/VXCRLvcs=  15              Ry    # [XC] XCpotential RL components/' gwppa.in
 sed -i 's/GTermKind.*/GTermKind= "BG"                  # [GW] GW terminator ("none","BG" Bruneval-Gonze,"BRS" Berger-Reining-Sottile)/' gwppa.in
+sed -i "s|NGsBlkXp.*|NGsBlkXp= 15               Ry    # [Xp] Response block size|" gwppa.in
+sed -i "/GbndRnge/i UseEbands" gwppa.in
 
 # 2) Add parallel directives
 cat >> gwppa.in << EOF
@@ -88,4 +92,51 @@ EOF
 
 # G0W0
 srun yambo -F gwppa.in -J output/gwppa.out
+
+# Following step 3 of this tutorial to draw band structures
+# https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN
+
+# clean up to be sure
+rm -f ypp_bands.in
+# create ypp input
+srun -n1 ypp -s b -F ypp_bands.in
+# edit number of bands
+sed -i '/1 \| 302/d' ypp_bands.in
+sed -i '/BANDS_bands/a \  50 | 59 |                      # Number of bands' ypp_bands.in
+# add path in K-space
+sed -i '/%BANDS_kpts /a \ 0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |' ypp_bands.in
+# edit number of steps along path
+sed -i "s/10/30/" ypp_bands.in
+
+# ypp to interpolate DFT results
+srun ypp -F ypp_bands.in
+mv -f o.bands_interpolated o.bands_interpolated_dft
+
+# create ypp input for GW bands
+cat <<\EOF >> ypp_bands.in
+GfnQPdb= "E < ./output/gwppa.out/ndb.QP"
+EOF
+
+# ypp to interpolate GW results
+srun ypp -F ypp_bands.in
+mv -f o.bands_interpolated o.bands_interpolated_gw
+
+# DFT and bands
+gnuplot <<\EOF
+set terminal png size 500,400
+set output 'interpolated-27-27-3.png'
+set title 'DFT and GW bands along Gamma-Kappa path'
+plot 'o.bands_interpolated_dft' using 0:2 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:3 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:5 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:7 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:9 w l linetype 7, \
+     'o.bands_interpolated_dft' using 0:11 w l linetype 7, \
+     'o.bands_interpolated_gw' using 0:2 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:3 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:5 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:7 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:9 w l linetype -1, \
+     'o.bands_interpolated_gw' using 0:11 w l linetype -1
+EOF
 
