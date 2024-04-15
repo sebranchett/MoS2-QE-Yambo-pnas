@@ -1,0 +1,18 @@
+#                                                                     
+# ooooo   oooo ..     ooo        ooo ooooooooo.    .oooo.             
+#  `88.   .8" .88.    `88.       .88 `88"   `Y8b  dP"  `Yb            
+#   `88. .8" .8"88.    888b     d"88  88     888 88      88           
+#    `88.8" .8" `88.   8 Y88. .P  88  88oooo888" 88      88           
+#     `88" .88ooo888.  8  `888"   88  88    `88b 88      88           
+#      88 .8"     `88. 8    Y     88  88    .88P `8b    d8"           
+#     o88o88o      888o8          88 o88bood8P"   `Ybod8P"            
+#                                                                     
+#                                                                     
+# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
+#                    Branch is parallel                               
+#                   MPI+HDF5_MPI_IO Build                             
+#                 http://www.yambo-code.org                           
+#
+setup                            # [R] Initialization
+MaxGvecs=  99839           RL    # [INI] Max number of G-vectors planned to use
+Gthresh= 0.100000E-4             # [INI] Accuracy for energy shell separation [-1. automatic]

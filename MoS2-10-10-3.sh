@@ -101,7 +101,8 @@ rm -f ypp_bands.in
 # create ypp input
 srun -n1 ypp -s b -F ypp_bands.in
 # edit number of bands
-sed -i 's/ 1 | 252/50 |  59/' ypp_bands.in
+sed -i '/1 \| 302/d' ypp_bands.in
+sed -i '/BANDS_bands/a \  50 | 59 |                      # Number of bands' ypp_bands.in
 # add path in K-space
 sed -i '/%BANDS_kpts /a \ 0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |' ypp_bands.in
 # edit number of steps along path
