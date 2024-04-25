@@ -91,7 +91,8 @@ rm -f G0W0_w_convergence.dat
 for NGsBlkXp in 01 02 03 04 05 06 07; do
   sed -i "s|NGsBlkXp= 1                RL|NGsBlkXp= ${NGsBlkXp}                 Ry|" gwppa.in
   srun yambo -F gwppa.in -J G0W0_W_${NGsBlkXp}Ry
-  grep "  53 " o-G0W0_W_${NGsBlkXp}Ry.qp | grep "  1  " | awk -v NGsBlkXp="$NGsBlkXp" '{print NGsBlkXp " " $3+$4}' >> G0W0_w_convergence.dat
+  shift=$(grep "  52 " o-G0W0_W_${NGsBlkXp}Ry.qp | grep "  1  " | awk '{print $4}')
+  grep "  53 " o-G0W0_W_${NGsBlkXp}Ry.qp | grep "  1  " | awk -v NGsBlkXp="$NGsBlkXp" -v shift="$shift" '{print NGsBlkXp " " $3+$4-shift}' >> G0W0_w_convergence.dat
   sed -i "s|NGsBlkXp= ..                 Ry|NGsBlkXp= 1                RL|" gwppa.in
 done
 
@@ -108,7 +109,8 @@ rm -f G0W0_w_bands_convergence.dat
 for BndsRnXp in 100 150 200 250 300; do
   sed -i "/BndsRnXp/{n;s|  1 . 300|  1 \| ${BndsRnXp}|}" gwppa.in
   srun yambo -F gwppa.in -J G0W0_W_${BndsRnXp}_bands
-  grep "  53 " o-G0W0_W_${BndsRnXp}_bands.qp* | grep "  1  " | awk -v BndsRnXp="$BndsRnXp" '{print BndsRnXp " " $3+$4}' >> G0W0_w_bands_convergence.dat
+  shift=$(grep "  52 " o-G0W0_W_${BndsRnXp}_bands.qp | grep "  1  " | awk '{print $4}')
+  grep "  53 " o-G0W0_W_${BndsRnXp}_bands.qp* | grep "  1  " | awk -v BndsRnXp="$BndsRnXp" -v shift="$shift" '{print BndsRnXp " " $3+$4-shift}' >> G0W0_w_bands_convergence.dat
   # set back to 1 - 10
   sed -i "/BndsRnXp/{n;s|  1 . ${BndsRnXp}|  1 \| 300|}" gwppa.in
 done
@@ -128,7 +130,8 @@ rm -f G0W0_empty_bands_convergence.dat
 for GbndRnge in 50 100 150 200 250 300; do
   sed -i "/GbndRnge/{n;s|  1 . 300|  1 \| ${GbndRnge}|}" gwppa.in
   srun yambo -F gwppa.in -J G0W0_W_${GbndRnge}_empty_bands
-  grep "  53 " o-G0W0_W_${GbndRnge}_empty_bands.qp* | grep "  1  " | awk -v GbndRnge="$GbndRnge" '{print GbndRnge " " $3+$4}' >> G0W0_empty_bands_convergence.dat
+  shift=$(grep "  52 " o-G0W0_W_${GbndRnge}_empty_bands.qp | grep "  1  " | awk '{print $4}')
+  grep "  53 " o-G0W0_W_${GbndRnge}_empty_bands.qp* | grep "  1  " | awk -v GbndRnge="$GbndRnge" -v shift="$shift" '{print GbndRnge " " $3+$4-shift}' >> G0W0_empty_bands_convergence.dat
   # set back to 1 - 300
   sed -i "/GbndRnge/{n;s|  1 . ${GbndRnge}|  1 \| 300|}" gwppa.in
 done
