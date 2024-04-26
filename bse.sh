@@ -45,6 +45,7 @@ cd "$WORKDIR"
 # Create input
 srun -n1 yambo -X s -F statscreen.in
 # Change LongDrXs so perturbing electric field has components in each direction
+sed -i 's/NGsBlkXs.*/NGsBlkXs= 5                Ry    # [Xs] Response block size/' statscreen.in
 sed -i 's/0.000000 |/1.000000 |/g' statscreen.in
 # Run static screening
 srun yambo -F statscreen.in -J BSE
@@ -57,6 +58,7 @@ sed -i 's/BSENGBlk.*/BSENGBlk= -1               RL    # [BSK] Screened interacti
 # The article states three valence and five conduction bands
 # Band 52 is the highest occupied state, and states are degenerate
 sed -i 's/.*# \[BSK\] Bands range/  47 |  62 |                     # [BSK] Bands range/' bse_kernel.in
+sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 2 |                             # [BSK] Transferred momenta range/' bse_kernel.in
 # and run
 srun yambo -F bse_kernel.in -J BSE
 
@@ -68,6 +70,7 @@ srun -n1 yambo -F bse_qp.in -y d -V qp -J BSE
 sed -i 's/KfnQPdb.*/KfnQPdb= "E < output\/gwppa.out\/ndb.QP"  # [EXTQP BSK BSS] Database action/' bse_qp.in
 # write exciton composition, in terms of electron-hole pairs, to disk
 sed -i 's/#WRbsWF/WRbsWF/' bse_qp.in
+sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 2 |                             # [BSK] Transferred momenta range/' bse_qp.in
 # and run BSE
 srun yambo -F bse_qp.in -J "output/gwppa.out,BSE"
 
