@@ -8,7 +8,9 @@ done
 gnuplot <<\EOF
 set terminal png size 500,400
 set output 'NGsBlkXp.png'
-set title 'size convergence NGsBlkXs (Ry)'
+set title 'MoS2 5x5x2 convergence NGsBlkXs (Ry)'
 set yrange [ 2 : ]
+set ylabel 'band gap (eV)'
+set xlabel 'NGsBlkXp (Ry)'
 plot 'NGsBlkXp.dat' w lp
 EOF
