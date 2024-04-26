@@ -1,16 +1,16 @@
 #                                                                     
-#  ____  ____     _       ____    ____  ______      ___               
-# |_  _||_  _|   / \     |_   \  /   _||_   _ \   ."   `.             
-#   \ \  / /    / _ \      |   \/   |    | |_) | /  .-.  \            
-#    \ \/ /    / ___ \     | |\  /| |    |  __". | |   | |            
-#    _|  |_  _/ /   \ \_  _| |_\/_| |_  _| |__) |\  `-"  /            
-#   |______||____| |____||_____||_____||_______/  `.___."             
-#                                                                     
+# ooooo   oooo ..     ooo        ooo ooooooooo.    .oooo.             
+#  `88.   .8" .88.    `88.       .88 `88"   `Y8b  dP"  `Yb            
+#   `88. .8" .8"88.    888b     d"88  88     888 88      88           
+#    `88.8" .8" `88.   8 Y88. .P  88  88oooo888" 88      88           
+#     `88" .88ooo888.  8  `888"   88  88    `88b 88      88           
+#      88 .8"     `88. 8    Y     88  88    .88P `8b    d8"           
+#     o88o88o      888o8          88 o88bood8P"   `Ybod8P"            
 #                                                                     
 #                                                                     
 #                    Branch is parallel                               
-#                  MPI+HDF5_MPI_IO Build                              
-#                http://www.yambo-code.org                            
+#                   MPI+HDF5_MPI_IO Build                             
+#                 http://www.yambo-code.org                           
 #
 electrons                        # [R] Electronic properties
 bnds                             # [R] Bands
@@ -25,7 +25,7 @@ cooOut= "rlu"                    # Points coordinates (out) cc/rlu/iku/alat
 %
 CIRCUIT_E_DB_path= "none"        # SAVE obtained from the QE `bands` run (alternative to %BANDS_kpts)
 BANDS_path= ""                   # High-Symmetry points labels (G,M,K,L...) also using composed positions (0.5xY+0.5xL).
-BANDS_steps= 30                  # Number of divisions
+BANDS_steps= 50                  # Number of divisions
 #BANDS_built_in                # Print the bands of the generating points of the circuit using the nearest internal point
 %BANDS_kpts                      # K points of the bands circuit
  0.00000 |0.00000 |0.00000 |
