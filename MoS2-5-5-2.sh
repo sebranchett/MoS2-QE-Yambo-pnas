@@ -69,7 +69,7 @@ srun -n1 yambo -p p -F gwppa.in
 sed -i 's/EXXRLvcs.*/EXXRLvcs=  68              Ry    # [XX] Exchange    RL components/' gwppa.in
 sed -i 's/VXCRLvcs.*/VXCRLvcs=  15              Ry    # [XC] XCpotential RL components/' gwppa.in
 sed -i 's/GTermKind.*/GTermKind= "BG"                  # [GW] GW terminator ("none","BG" Bruneval-Gonze,"BRS" Berger-Reining-Sottile)/' gwppa.in
-sed -i "s|NGsBlkXp.*|NGsBlkXp= 15               Ry    # [Xp] Response block size|" gwppa.in
+sed -i "s|NGsBlkXp.*|NGsBlkXp=   5              Ry    # [Xp] Response block size|" gwppa.in
 sed -i "/GbndRnge/i UseEbands" gwppa.in
 
 # 2) Add parallel directives
@@ -106,7 +106,7 @@ sed -i '/BANDS_bands/a \  50 | 59 |                      # Number of bands' ypp_
 # add path in K-space
 sed -i '/%BANDS_kpts /a \ 0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |' ypp_bands.in
 # edit number of steps along path
-sed -i "s/10/30/" ypp_bands.in
+sed -i "s/10/50/" ypp_bands.in
 
 # ypp to interpolate DFT results
 srun ypp -F ypp_bands.in
