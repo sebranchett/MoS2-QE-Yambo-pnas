@@ -3,7 +3,7 @@
 #SBATCH --job-name=MoS2-bse
 #SBATCH --partition=compute
 #SBATCH --account=innovation
-#SBATCH --time=23:30:00
+#SBATCH --time=02:30:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=8
 #SBATCH --cpus-per-task=1
@@ -58,7 +58,7 @@ sed -i 's/BSENGBlk.*/BSENGBlk= -1               RL    # [BSK] Screened interacti
 # The article states three valence and five conduction bands
 # Band 52 is the highest occupied state, and states are degenerate
 sed -i 's/.*# \[BSK\] Bands range/  47 |  62 |                     # [BSK] Bands range/' bse_kernel.in
-sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 2 |                             # [BSK] Transferred momenta range/' bse_kernel.in
+sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 10 |                             # [BSK] Transferred momenta range/' bse_kernel.in
 # and run
 srun yambo -F bse_kernel.in -J BSE
 
@@ -70,7 +70,7 @@ srun -n1 yambo -F bse_qp.in -y d -V qp -J BSE
 sed -i 's/KfnQPdb.*/KfnQPdb= "E < output\/gwppa.out\/ndb.QP"  # [EXTQP BSK BSS] Database action/' bse_qp.in
 # write exciton composition, in terms of electron-hole pairs, to disk
 sed -i 's/#WRbsWF/WRbsWF/' bse_qp.in
-sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 2 |                             # [BSK] Transferred momenta range/' bse_qp.in
+sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 10 |                             # [BSK] Transferred momenta range/' bse_qp.in
 # and run BSE
 srun yambo -F bse_qp.in -J "output/gwppa.out,BSE"
 
@@ -82,3 +82,14 @@ set title 'BSE Optical absorption vs. Energy (eV)'
 plot 'output/o-gwppa.out.eps_q1_diago_bse' u 1:2 w l
 EOF
 
+# Following this:
+# https://www.yambo-code.eu/wiki/index.php?title=How_to_analyse_excitons
+srun ypp -e s 1 -V qp -J "BSE,output/gwppa.out"
+gnuplot <<\EOF
+set terminal png size 500,400
+set output 'BSE_exciton_strength.png'
+set title 'Excitons sorted for the q-index = 1 (optical limit q=0)'
+set xlabel 'E (eV)'
+set ylabel 'Strength'
+plot 'o-BSE.exc_qpt1_E_sorted' with p
+EOF
