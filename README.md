@@ -14,8 +14,9 @@ In addition, this tutorial was helpful for the Yambo GW  calcuation and band str
 In addition, these tutorials were helpful for the Yambo BSE calculation:
 * https://www.yambo-code.eu/wiki/index.php/Static_screening
 * https://www.yambo-code.eu/wiki/index.php/Bethe-Salpeter_kernel
-* (probably not https://www.yambo-code.eu/wiki/index.php/Bethe-Salpeter_solver:_diagonalization)
+* https://www.yambo-code.eu/wiki/index.php/How_to_choose_the_input_parameters
 * https://www.yambo-code.eu/wiki/index.php/Bethe-Salpeter_on_top_of_quasiparticle_energies
+* https://www.yambo-code.eu/wiki/index.php?title=How_to_analyse_excitons
 
 Information on running Yambo in parallel can be found here: https://www.yambo-code.eu/wiki/index.php/Using_Yambo_in_parallel and here: https://www.yambo-code.eu/wiki/index.php/Parallelization.
 
