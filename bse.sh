@@ -74,22 +74,41 @@ sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 10 |                       
 # and run BSE
 srun yambo -F bse_qp.in -J "output/gwppa.out,BSE"
 
-# Plot the results
+# Plot the Optical Absorption
 gnuplot  <<\EOF
 set terminal png size 500,400
-set output 'bse-5-5-2.png'
+set output 'BSE-optical-absorption-5-5-2.png'
 set title 'BSE Optical absorption vs. Energy (eV)'
 plot 'output/o-gwppa.out.eps_q1_diago_bse' u 1:2 w l
 EOF
 
 # Following this:
 # https://www.yambo-code.eu/wiki/index.php?title=How_to_analyse_excitons
+# Plot the exciton strengths
 srun ypp -e s 1 -V qp -J "BSE,output/gwppa.out"
 gnuplot <<\EOF
 set terminal png size 500,400
-set output 'BSE_exciton_strength.png'
+set output 'BSE-exciton-strength-5-5-2.png'
 set title 'Excitons sorted for the q-index = 1 (optical limit q=0)'
 set xlabel 'E (eV)'
 set ylabel 'Strength'
 plot 'o-BSE.exc_qpt1_E_sorted' with p
+EOF
+
+# Interpolate exciton dispersion
+srun ypp -e i -F bse_exciton.in
+sed -i 's/States= "0 - 0"/States= "0 - 4"/' bse_exciton.in
+sed -i 's/INTERP_mode= "NN"   /INTERP_mode= "BOLTZ"/' bse_exciton.in
+sed -i 's/BANDS_steps= 10 /BANDS_steps= 100/' bse_exciton.in
+sed -i '/%BANDS_kpts /a \ 0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |' bse_exciton.in
+srun ypp -F bse_exciton.in -J "BSE,output/gwppa.out"
+# Plot exciton energies
+gnuplot <<\EOF
+set terminal png size 500,400
+set output 'BSE-exciton-along-path-5-5-2.png'
+set title 'BSE excitons along Gamma-Kappa path'
+set xlabel '|q| (a.u.)'
+set ylabel 'Exiton energy (eV)'
+set yrange [ 0 : ]
+plot for [i=2:7] 'o-BSE.excitons_interpolated' using 1:i with l title "Exciton ".(i-1)
 EOF
