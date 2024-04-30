@@ -1,0 +1,37 @@
+#  __      __   ______   __       __  _______    ______               
+# |  \    /  \ /      \ |  \     /  \|       \  /      \              
+#  \$$\  /  $$|  $$$$$$\| $$\   /  $$| $$$$$$$\|  $$$$$$\             
+#   \$$\/  $$ | $$__| $$| $$$\ /  $$$| $$__/ $$| $$  | $$             
+#    \$$  $$  | $$    $$| $$$$\  $$$$| $$    $$| $$  | $$             
+#     \$$$$   | $$$$$$$$| $$\$$ $$ $$| $$$$$$$\| $$  | $$             
+#     | $$    | $$  | $$| $$ \$$$| $$| $$__/ $$| $$__/ $$             
+#     | $$    | $$  | $$| $$  \$ | $$| $$    $$ \$$    $$             
+#      \$$     \$$   \$$ \$$      \$$ \$$$$$$$   \$$$$$$              
+#                                                                     
+# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
+#                   Branch is parallel                                
+#                  MPI+HDF5_MPI_IO Build                              
+#                http://www.yambo-code.org                            
+#
+excitons                         # [R] Excitonic properties
+interpolate                      # [R] Interpolate
+INTERP_mode= "BOLTZ"             # Interpolation mode (NN=nearest point, BOLTZ=boltztrap aproach)
+INTERP_Shell_Fac= 20.00000       # The bigger it is a higher number of shells is used
+INTERP_NofNN= 1                  # Number of Nearest sites in the NN method
+BANDS_steps= 100                 # Number of divisions
+cooIn= "rlu"                     # Points coordinates (in) cc/rlu/iku/alat
+cooOut= "rlu"                    # Points coordinates (out) cc/rlu/iku/alat
+States= "0 - 4"                  # Index of the BS state(s)
+% INTERP_Grid
+-1 |-1 |-1 |                             # Interpolation BZ Grid
+%
+#PrtDOS                        # Print Exciton Density of States
+% DOSERange
+ 1.000000 |-1.000000 |         eV    # Energy range
+%
+DOSESteps=  500                  # Energy steps
+DOS_broad= 0.100000        eV    # Broadening of the DOS
+%BANDS_kpts                      # K points of the bands circuit
+ 0.00000 |0.00000 |0.00000 |
+ 0.33333 |0.33333 |0.00000 |
+%

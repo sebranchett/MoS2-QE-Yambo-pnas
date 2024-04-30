@@ -1,0 +1,26 @@
+#                                                                     
+#   __   __     _        __  __       ____      U  ___  u             
+#   \ \ / / U  /"\  U u |" \/ "| u U | __") u    \/"_ \/              
+#    \ V /   \/ _ \/   \| |\/| |/   \|  _ \/     | | | |              
+#   U_|"|_u  / ___ \    | |  | |     | |_) | .-,_| |_| |              
+#     |_|   /_/   \_\   |_|  |_|     |____/   \_)-\___/               
+# .-,//|(_   \\    >>  <<,-,,-.     _|| \\_        \\                 
+#  \_) (__) (__)  (__)  (./  \.)   (__) (__)      (__)                
+#                                                                     
+#                                                                     
+# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
+#                   Branch is parallel                                
+#                  MPI+HDF5_MPI_IO Build                              
+#                http://www.yambo-code.org                            
+#
+screen                           # [R] Inverse Dielectric/Response Matrix
+em1s                             # [R][Xs] Statically Screened Interaction
+dipoles                          # [R] Oscillator strenghts (or dipoles)
+Chimod= "HARTREE"                # [X] IP/Hartree/ALDA/LRC/PF/BSfxc
+% BndsRnXs
+   1 | 102 |                         # [Xs] Polarization function bands
+%
+NGsBlkXs= 5                Ry    # [Xs] Response block size
+% LongDrXs
+ 1.000000 | 1.000000 | 1.000000 |        # [Xs] [cc] Electric Field
+%

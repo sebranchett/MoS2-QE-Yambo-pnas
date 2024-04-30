@@ -10,10 +10,12 @@
 SAVE/
 LOG/
 output/
+BSE/
 r_*
 init.in
 ypp_bands.in
 gwppa.in
+statscreen.in
 CRASH
 *.dat*
 l_*

@@ -1,0 +1,29 @@
+#                                                                     
+# :   :::   :::     ::::    ::::  :::::::::   ::::::::                
+# :+:   :+: :+: :+:   +:+:+: :+:+:+ :+:    :+: :+:    :+              
+#  +:+ +:+ +:+   +:+  +:+ +:+:+ +:+ +:+    +:+ +:+    +:+             
+#   +#++: +#++:++#++: +#+  +:+  +#+ +#++:++#+  +#+    +:+             
+#    +#+  +#+     +#+ +#+       +#+ +#+    +#+ +#+    +#+             
+#    #+#  #+#     #+# #+#       #+# #+#    #+# #+#    #+#             
+#    ###  ###     ### ###       ### #########   ########              
+#                                                                     
+#                                                                     
+# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
+#                   Branch is parallel                                
+#                  MPI+HDF5_MPI_IO Build                              
+#                http://www.yambo-code.org                            
+#
+optics                           # [R] Linear Response optical properties
+bse                              # [R][BSE] Bethe Salpeter Equation.
+dipoles                          # [R] Oscillator strenghts (or dipoles)
+BSKmod= "SEX"                    # [BSE] IP/Hartree/HF/ALDA/SEX/BSfxc
+BSEmod= "resonant"               # [BSE] resonant/retarded/coupling
+BSENGexx=  68              Ry    # [BSK] Exchange components
+BSENGBlk= -1               RL    # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]
+#WehCpl                        # [BSK] eh interaction included also in coupling
+% BSEQptR
+ 1 | 10 |                             # [BSK] Transferred momenta range
+%
+% BSEBands
+  47 |  62 |                     # [BSK] Bands range
+%

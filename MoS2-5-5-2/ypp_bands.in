@@ -1,21 +1,21 @@
 #                                                                     
-# ooooo   oooo ..     ooo        ooo ooooooooo.    .oooo.             
-#  `88.   .8" .88.    `88.       .88 `88"   `Y8b  dP"  `Yb            
-#   `88. .8" .8"88.    888b     d"88  88     888 88      88           
-#    `88.8" .8" `88.   8 Y88. .P  88  88oooo888" 88      88           
-#     `88" .88ooo888.  8  `888"   88  88    `88b 88      88           
-#      88 .8"     `88. 8    Y     88  88    .88P `8b    d8"           
-#     o88o88o      888o8          88 o88bood8P"   `Ybod8P"            
+#   __   __     _        __  __       ____      U  ___  u             
+#   \ \ / / U  /"\  U u |" \/ "| u U | __") u    \/"_ \/              
+#    \ V /   \/ _ \/   \| |\/| |/   \|  _ \/     | | | |              
+#   U_|"|_u  / ___ \    | |  | |     | |_) | .-,_| |_| |              
+#     |_|   /_/   \_\   |_|  |_|     |____/   \_)-\___/               
+# .-,//|(_   \\    >>  <<,-,,-.     _|| \\_        \\                 
+#  \_) (__) (__)  (__)  (./  \.)   (__) (__)      (__)                
 #                                                                     
 #                                                                     
-#                    Branch is parallel                               
-#                   MPI+HDF5_MPI_IO Build                             
-#                 http://www.yambo-code.org                           
+#                   Branch is parallel                                
+#                  MPI+HDF5_MPI_IO Build                              
+#                http://www.yambo-code.org                            
 #
 electrons                        # [R] Electronic properties
 bnds                             # [R] Bands
 PROJECT_mode= "none"             # Instruct ypp how to project the DOS. ATOM, LINE, PLANE.
-INTERP_mode= "NN"                # Interpolation mode (NN=nearest point, BOLTZ=boltztrap aproach)
+INTERP_mode= "BOLTZ"             # Interpolation mode (NN=nearest point, BOLTZ=boltztrap aproach)
 INTERP_Shell_Fac= 20.00000       # The bigger it is a higher number of shells is used
 OutputAlat= 0.000000             # [a.u.] Lattice constant used for "alat" ouput format
 cooIn= "rlu"                     # Points coordinates (in) cc/rlu/iku/alat

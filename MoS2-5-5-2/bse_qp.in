@@ -1,0 +1,62 @@
+#                                                                     
+# ooooo   oooo ..     ooo        ooo ooooooooo.    .oooo.             
+#  `88.   .8" .88.    `88.       .88 `88"   `Y8b  dP"  `Yb            
+#   `88. .8" .8"88.    888b     d"88  88     888 88      88           
+#    `88.8" .8" `88.   8 Y88. .P  88  88oooo888" 88      88           
+#     `88" .88ooo888.  8  `888"   88  88    `88b 88      88           
+#      88 .8"     `88. 8    Y     88  88    .88P `8b    d8"           
+#     o88o88o      888o8          88 o88bood8P"   `Ybod8P"            
+#                                                                     
+#                                                                     
+# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
+#                    Branch is parallel                               
+#                   MPI+HDF5_MPI_IO Build                             
+#                 http://www.yambo-code.org                           
+#
+bss                              # [R] BSE solver
+optics                           # [R] Linear Response optical properties
+dipoles                          # [R] Oscillator strenghts (or dipoles)
+bse                              # [R][BSE] Bethe Salpeter Equation.
+BSKmod= "SEX"                    # [BSE] IP/Hartree/HF/ALDA/SEX/BSfxc
+BSEmod= "resonant"               # [BSE] resonant/retarded/coupling
+BSSmod= "d"                      # [BSS] (h)aydock/(d)iagonalization/(s)lepc/(i)nversion/(t)ddft`
+BSENGexx=  6943            RL    # [BSK] Exchange components
+BSENGBlk= 161              RL    # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]
+#WehCpl                        # [BSK] eh interaction included also in coupling
+KfnQPdb= "E < output/gwppa.out/ndb.QP"  # [EXTQP BSK BSS] Database action
+KfnQP_INTERP_NN= 1               # [EXTQP BSK BSS] Interpolation neighbours (NN mode)
+KfnQP_INTERP_shells= 20.00000    # [EXTQP BSK BSS] Interpolation shells (BOLTZ mode)
+KfnQP_DbGd_INTERP_mode= "NN"     # [EXTQP BSK BSS] Interpolation DbGd mode
+% KfnQP_E
+ 0.000000 | 1.000000 | 1.000000 |        # [EXTQP BSK BSS] E parameters  (c/v) eV|adim|adim
+%
+KfnQP_Z= ( 1.000000 , 0.000000 )         # [EXTQP BSK BSS] Z factor  (c/v)
+KfnQP_Wv_E= 0.000000       eV    # [EXTQP BSK BSS] W Energy reference  (valence)
+% KfnQP_Wv
+ 0.000000 | 0.000000 | 0.000000 |        # [EXTQP BSK BSS] W parameters  (valence) eV| 1|eV^-1
+%
+KfnQP_Wv_dos= 0.000000     eV    # [EXTQP BSK BSS] W dos pre-factor  (valence)
+KfnQP_Wc_E= 0.000000       eV    # [EXTQP BSK BSS] W Energy reference  (conduction)
+% KfnQP_Wc
+ 0.000000 | 0.000000 | 0.000000 |        # [EXTQP BSK BSS] W parameters  (conduction) eV| 1 |eV^-1
+%
+KfnQP_Wc_dos= 0.000000     eV    # [EXTQP BSK BSS] W dos pre-factor  (conduction)
+% BSEQptR
+ 1 | 10 |                             # [BSK] Transferred momenta range
+%
+% BSEBands
+  47 |  62 |                         # [BSK] Bands range
+%
+% BEnRange
+  0.00000 | 10.00000 |         eV    # [BSS] Energy range
+%
+% BDmRange
+ 0.100000 | 0.100000 |         eV    # [BSS] Damping range
+%
+BEnSteps= 100                    # [BSS] Energy steps
+% BLongDir
+ 1.000000 | 0.000000 | 0.000000 |        # [BSS] [cc] Electric Field
+%
+BSEprop= "abs"                   # [BSS] Can be any among abs/jdos/kerr/magn/dich/photolum/esrt
+BSEdips= "none"                  # [BSS] Can be "trace/none" or "xy/xz/yz" to define off-diagonal rotation plane
+WRbsWF                        # [BSS] Write to disk excitonic the WFs
