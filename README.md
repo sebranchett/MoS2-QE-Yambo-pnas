@@ -1,4 +1,4 @@
-# Testing use of Quantum Espresso and Yambo installation on DelftBlue
+# Testing use of Quantum Espresso and Yambo on DelftBlue
 Testing use of software by reproducing the pressure=0 results for MoS2 from this article: https://www.pnas.org/doi/full/10.1073/pnas.2010110118.
 
 Unit cell and atom coordinate information taken from supporting information.
