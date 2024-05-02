@@ -36,7 +36,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$YAMBODIR/lib
 # Input file generated using AMS for Quantum Espresso
 # Pseudopotentials from https://www.physics.rutgers.edu/gbrv/
 
-WORKDIR=${PWD}/bse
+WORKDIR=${PWD}/bse-5-5-2
 cd "$WORKDIR"
 
 # The GW results should be in the current location
@@ -44,21 +44,22 @@ cd "$WORKDIR"
 # Static screening
 # Create input
 srun -n1 yambo -X s -F statscreen.in
-# Change LongDrXs so perturbing electric field has components in each direction
 sed -i 's/NGsBlkXs.*/NGsBlkXs= 5                Ry    # [Xs] Response block size/' statscreen.in
 sed -i 's/0.000000 |/1.000000 |/g' statscreen.in
 # Run static screening
 srun yambo -F statscreen.in -J BSE
+# Find the number of q-points
+qpoints=$(grep 'IBZ Q-points' r-BSE_screen_dipoles_em1s | awk '{print $4}')
 
 # Bethe-Salpeter kernel
 # Create input
 srun -n1 yambo -o b -k sex -F bse_kernel.in -J BSE
 sed -i 's/BSENGexx.*/BSENGexx=  68              Ry    # [BSK] Exchange components/' bse_kernel.in
-sed -i 's/BSENGBlk.*/BSENGBlk= -1               RL    # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]/' bse_kernel.in
+sed -i 's/BSENGBlk.*/BSENGBlk=   5              Ry    # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]/' bse_kernel.in
 # The article states three valence and five conduction bands
 # Band 52 is the highest occupied state, and states are degenerate
 sed -i 's/.*# \[BSK\] Bands range/  47 |  62 |                     # [BSK] Bands range/' bse_kernel.in
-sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 10 |                             # [BSK] Transferred momenta range/' bse_kernel.in
+sed -i "s/.*# \[BSK\] Transferred momenta range/ 1 | ${qpoints} |                             # [BSK] Transferred momenta range/" bse_kernel.in
 # and run
 srun yambo -F bse_kernel.in -J BSE
 
@@ -66,11 +67,13 @@ srun yambo -F bse_kernel.in -J BSE
 # Create input
 srun -n1 yambo -F bse_qp.in -y d -V qp -J BSE
 
+sed -i 's/BSENGexx.*/BSENGexx=  68              Ry    # [BSK] Exchange components/' bse_qp.in
+sed -i 's/BSENGBlk.*/BSENGBlk=   5              Ry    # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]/' bse_qp.in
 # Read the QP corrections from previous GW calculation
 sed -i 's/KfnQPdb.*/KfnQPdb= "E < output\/gwppa.out\/ndb.QP"  # [EXTQP BSK BSS] Database action/' bse_qp.in
 # write exciton composition, in terms of electron-hole pairs, to disk
 sed -i 's/#WRbsWF/WRbsWF/' bse_qp.in
-sed -i 's/.*# \[BSK\] Transferred momenta range/ 1 | 10 |                             # [BSK] Transferred momenta range/' bse_qp.in
+sed -i "s/.*# \[BSK\] Transferred momenta range/ 1 | ${qpoints} |                             # [BSK] Transferred momenta range/" bse_qp.in
 # and run BSE
 srun yambo -F bse_qp.in -J "output/gwppa.out,BSE"
 
