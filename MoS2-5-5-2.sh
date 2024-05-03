@@ -198,6 +198,7 @@ plot 'o-BSE.exc_qpt1_E_sorted' with p
 EOF
 
 # Interpolate exciton dispersion
+rm -f bse_exciton.in
 srun ypp -e i -F bse_exciton.in
 sed -i 's/States= "0 - 0"/States= "0 - 4"/' bse_exciton.in
 sed -i 's/INTERP_mode= "NN"   /INTERP_mode= "BOLTZ"/' bse_exciton.in
