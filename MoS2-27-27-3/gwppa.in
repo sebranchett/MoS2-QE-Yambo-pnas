@@ -1,12 +1,12 @@
 #                                                                     
-#                                                                     
-# Y88b    /   e           e    e      888~~\    ,88~-_                
-#  Y88b  /   d8b         d8b  d8b     888   |  d888   \               
-#   Y88b/   /Y88b       d888bdY88b    888 _/  88888    |              
-#    Y8Y   /  Y88b     / Y88Y Y888b   888  \  88888    |              
-#     Y   /____Y88b   /   YY   Y888b  888   |  Y888   /               
-#    /   /      Y88b /          Y888b 888__/    `88_-~                
-#                                                                     
+#  /$$     /$$ /$$$$$$  /$$      /$$ /$$$$$$$   /$$$$$$               
+# |  $$   /$$//$$__  $$| $$$    /$$$| $$__  $$ /$$__  $$              
+#  \  $$ /$$/| $$  \ $$| $$$$  /$$$$| $$  \ $$| $$  \ $$              
+#   \  $$$$/ | $$$$$$$$| $$ $$/$$ $$| $$$$$$$ | $$  | $$              
+#    \  $$/  | $$__  $$| $$  $$$| $$| $$__  $$| $$  | $$              
+#     | $$   | $$  | $$| $$\  $ | $$| $$  \ $$| $$  | $$              
+#     | $$   | $$  | $$| $$ \/  | $$| $$$$$$$/|  $$$$$$/              
+#     |__/   |__/  |__/|__/     |__/|_______/  \______/               
 #                                                                     
 # Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
 #                   Branch is parallel                                
@@ -24,7 +24,7 @@ Chimod= "HARTREE"                # [X] IP/Hartree/ALDA/LRC/PF/BSfxc
 % BndsRnXp
    1 | 102 |                         # [Xp] Polarization function bands
 %
-NGsBlkXp= 15               Ry    # [Xp] Response block size
+NGsBlkXp=   5              Ry    # [Xp] Response block size
 % LongDrXp
  1.000000 | 0.000000 | 0.000000 |        # [Xp] [cc] Electric Field
 %
