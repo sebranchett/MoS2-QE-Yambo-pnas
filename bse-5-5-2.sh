@@ -45,6 +45,7 @@ cd "$WORKDIR"
 # Create input
 srun -n1 yambo -X s -F statscreen.in
 sed -i 's/NGsBlkXs.*/NGsBlkXs= 5                Ry    # [Xs] Response block size/' statscreen.in
+# set directions for Electric Field - LongDrXs
 sed -i 's/0.000000 |/1.000000 |/g' statscreen.in
 # Run static screening
 srun yambo -F statscreen.in -J BSE
@@ -66,9 +67,13 @@ sed -i 's/#WRbsWF/WRbsWF/' bse.in
 sed -i '/WRbsWF/a KfnQPdb= "E < output\/gwppa.out\/ndb.QP"  # [EXTQP BSK BSS] Database action' bse.in
 # reduce parallelisation memory use
 sed -i '/dipoles/a PAR_def_mode= "memory"           # [PARALLEL] Default distribution mode ("balanced"/"memory"/"workload"/"KQmemory")' bse.in
+
+# add a line to remove the line below (limitation of sed?)
 sed -i "/% BLongDir/a remove this line and the next" bse.in
 sed -i "/remove this line and the next/,+1d" bse.in
+# replace the removed line
 sed -i "/% BLongDir/a \ 1.000000 | 1.000000 | 1.000000 |        # [BSS] [cc] Electric Field" bse.in
+
 # Run Bethe-Salpeter
 srun yambo -F bse.in -J "output/gwppa.out,BSE"
 
