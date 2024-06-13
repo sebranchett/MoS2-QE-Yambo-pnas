@@ -7,7 +7,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=24
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-er-cpu=8GB
+#SBATCH --mem=64GB
 
 # find your account with:
 # sacctmgr list -sp user $USER
