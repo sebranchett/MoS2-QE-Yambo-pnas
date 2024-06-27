@@ -1,3 +1,4 @@
+*.in
 *.run
 *.out
 *.UPF
@@ -5,24 +6,19 @@
 *.wfc*
 *.xml
 *.bands*
+*.png
+*.dat*
 *.save/
 *orig*
 SAVE/
 LOG/
 output/
-BSE/
 r_*
-init.in
-ypp_bands.in
-gwppa.in
-statscreen.in
-CRASH
-*.dat*
 l_*
 o.*
 o-*
 r-*
 G0W0*
-*.png
-bse*.in
+BSE*/
+CRASH
 
