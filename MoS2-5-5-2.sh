@@ -60,6 +60,7 @@ rm -f init.in
 srun -n1 yambo -i -V RL -F init.in
 # and run it:
 srun yambo -F init.in -J output/init.out
+# report at output/r-init.out_setup
 
 # Create GW input file with:
 rm -f gwppa.in
@@ -92,6 +93,7 @@ EOF
 
 # G0W0
 srun yambo -F gwppa.in -J output/gwppa.out
+# report at output/r-gwppa.out_HF_and_locXC_gw0_em1d_ppa_el_el_corr
 
 # Following step 3 of this tutorial to draw band structures
 # https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN
@@ -111,6 +113,7 @@ sed -i 's/INTERP_mode= "NN"   /INTERP_mode= "BOLTZ"/' ypp_bands.in
 
 # ypp to interpolate DFT results
 srun ypp -F ypp_bands.in
+# report at r_electrons_bnds
 mv -f o.bands_interpolated o.bands_interpolated_dft
 
 # create ypp input for GW bands
@@ -120,6 +123,7 @@ EOF
 
 # ypp to interpolate GW results
 srun ypp -F ypp_bands.in
+# report at r_electrons_bnds_01
 mv -f o.bands_interpolated o.bands_interpolated_gw
 
 # DFT and bands
@@ -151,6 +155,7 @@ sed -i 's/NGsBlkXs.*/NGsBlkXs= 5                Ry    # [Xs] Response block size
 sed -i 's/0.000000 |/1.000000 |/g' statscreen.in
 # Run static screening
 srun yambo -F statscreen.in -J BSE
+# report at r-BSE_screen_dipoles_em1s
 # Find the number of q-points
 qpoints=$(grep 'IBZ Q-points' r-BSE_screen_dipoles_em1s | awk '{print $4}')
 
@@ -178,7 +183,7 @@ sed -i "/% BLongDir/a \ 1.000000 | 1.000000 | 1.000000 |        # [BSS] [cc] Ele
 
 # Run Bethe-Salpeter
 srun yambo -F bse.in -J "output/gwppa.out,BSE"
-
+# report at output/r-gwppa.out_optics_dipoles_bss_bse
 # Plot the Optical Absorption
 gnuplot  <<\EOF
 set terminal png size 500,400
@@ -191,6 +196,7 @@ EOF
 # https://www.yambo-code.eu/wiki/index.php?title=How_to_analyse_excitons
 # Plot the exciton strengths
 srun ypp -e s 1 -V qp -J "BSE,output/gwppa.out"
+# report at r-BSE_excitons
 gnuplot <<\EOF
 set terminal png size 500,400
 set output 'BSE-exciton-strength-5-5-2.png'
@@ -208,6 +214,7 @@ sed -i 's/INTERP_mode= "NN"   /INTERP_mode= "BOLTZ"/' bse_exciton.in
 sed -i 's/BANDS_steps= 10 /BANDS_steps= 100/' bse_exciton.in
 sed -i '/%BANDS_kpts /a \ 0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |' bse_exciton.in
 srun ypp -F bse_exciton.in -J "BSE,output/gwppa.out"
+# report at r-BSE_excitons_interpolate
 # Plot exciton energies
 gnuplot <<\EOF
 set terminal png size 500,400
