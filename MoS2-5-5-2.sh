@@ -125,7 +125,7 @@ mv -f o.bands_interpolated o.bands_interpolated_gw
 # DFT and bands
 gnuplot <<\EOF
 set terminal png size 500,400
-set output 'interpolated-5-2-2.png'
+set output 'interpolated-5-5-2.png'
 set title 'DFT and GW bands along Gamma-Kappa path'
 plot 'o.bands_interpolated_dft' using 0:2 w l linetype 7, \
      'o.bands_interpolated_dft' using 0:3 w l linetype 7, \
