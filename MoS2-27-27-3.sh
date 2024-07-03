@@ -107,6 +107,7 @@ sed -i '/BANDS_bands/a \  50 | 59 |                      # Number of bands' ypp_
 sed -i '/%BANDS_kpts /a \ 0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |' ypp_bands.in
 # edit number of steps along path
 sed -i "s/10/50/" ypp_bands.in
+sed -i 's/INTERP_mode= "NN"   /INTERP_mode= "BOLTZ"/' ypp_bands.in
 
 # ypp to interpolate DFT results
 srun ypp -F ypp_bands.in
