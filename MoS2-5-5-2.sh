@@ -3,7 +3,7 @@
 #SBATCH --job-name=MoS2-5-5-2
 #SBATCH --partition=compute
 #SBATCH --account=innovation
-#SBATCH --time=24:00:00
+#SBATCH --time=04:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=24
 #SBATCH --cpus-per-task=1
