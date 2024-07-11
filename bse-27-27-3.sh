@@ -7,7 +7,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=128GB
+#SBATCH --mem=250GB
 
 # find your account with:
 # sacctmgr list -sp user $USER
@@ -35,7 +35,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$YAMBODIR/lib
 # Input file generated using AMS for Quantum Espresso
 # Pseudopotentials from https://www.physics.rutgers.edu/gbrv/
 
-WORKDIR=${PWD}/MoS2-27-27-3
+WORKDIR=${PWD}/bse-27-27-3
 cd "$WORKDIR"
 
 # BSE
