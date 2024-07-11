@@ -22,7 +22,25 @@ In addition, these tutorials were helpful for the Yambo BSE calculation:
 
 Information on running Yambo in parallel can be found here: https://www.yambo-code.eu/wiki/index.php/Using_Yambo_in_parallel and here: https://www.yambo-code.eu/wiki/index.php/Parallelization.
 
-The runs with 5-5-2 in the title are on a 5 x 5 x 2 k-point grid, instead of the 27 × 27 × 3 k-point grid used in the article. The 5-5-2 results are less accurate, but the calculations run much faster. This is useful for testing.
+## Notes
+The runs with 5-5-2 in the title are on a 5 x 5 x 2 k-point grid, instead of the 27 × 27 × 3 k-point grid used in the article. The 5-5-2 results are less accurate, but the calculations run much faster. This is useful for testing. The 10-10-3 files are for a 10 x 10 x 3 k-point grid, and were used to test scaling.
+
+`convergence.sh` is an example of how to perform some standard GW convergence tests.
+
+Because the 10-10-3 and 27-27-3 runs take so much time, it was convenient to split them into two parts: one for the DFT and GW  (named MoS2-x-x-x.sh) and the other for BSE (named bse-x-x-x.sh). The directories bse-x-x-x then contain the
+- `SAVE` directory, containing the DFT results
+- `output/gwppa.out` directory, containing the GW results
+
+copied from the MoS2-x-x-x directory. The 5-5-2 run was not split in this way.
+
+Approximate timings:
+|             | 5x5x5 | 10x10x3 | 27x27x3|
+|-------------|-------|---------|--------|
+| cpu         | 24    | 24      | 24     |
+| memory (GB) | 64    | 180     | 180    |
+| DFT         | 2 (m) | 5 (m)   | 20 (m) |
+| GW          | 20 (m) | 7 (h)  | 15 (d) |
+| BSE         | 50 (m) |||
 
 ## Acknowledgments
 Please acknowledge Quantum ESPRESSO by referencing the following 2 papers:
