@@ -24,8 +24,8 @@ module load gnuplot
 # See QE Prerequisites
 export LC_ALL=C
 
-QEDIR=/scratch/sbranchett/yambo-evaluation/q-e-qe-7.2
-YAMBODIR=/scratch/sbranchett/parallel-yambo/yambo-5.2.0
+QEDIR=/scratch/sbranchett/qe-yambo/q-e-qe-7.3.1
+YAMBODIR=/scratch/sbranchett/slepc-yambo/yambo-5.2.3
 export PATH=$PATH:$QEDIR/bin:$YAMBODIR/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$YAMBODIR/lib
 
