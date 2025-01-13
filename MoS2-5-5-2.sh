@@ -204,10 +204,6 @@ sed -i "/remove this line and the next/,+1d" bse.in
 # replace the removed line
 sed -i "/% BLongDir/a \ 1.000000 | 1.000000 | 1.000000 |  # [BSS] [cc] Electric Field" bse.in
 
-# set default number of CPUs for Linear Algebra
-sed -i "/WRbsWF/a BS_nCPU_LinAlg_INV= -1  # [PARALLEL] CPUs for Linear Algebra (if -1 it is automatically set)" bse.in
-sed -i "/WRbsWF/a BS_nCPU_LinAlg_DIAGO= -1  # [PARALLEL] CPUs for Linear Algebra (if -1 it is automatically set)" bse.in
-
 # Run Bethe-Salpeter
 srun yambo -F bse.in -J "output/gwppa,output/BSE"
 # report at output/r-gwppa_optics_dipoles_bss_bse

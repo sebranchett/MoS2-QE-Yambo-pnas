@@ -1,27 +1,27 @@
 #                                                                     
-# :   :::   :::     ::::    ::::  :::::::::   ::::::::                
-# :+:   :+: :+: :+:   +:+:+: :+:+:+ :+:    :+: :+:    :+              
-#  +:+ +:+ +:+   +:+  +:+ +:+:+ +:+ +:+    +:+ +:+    +:+             
-#   +#++: +#++:++#++: +#+  +:+  +#+ +#++:++#+  +#+    +:+             
-#    +#+  +#+     +#+ +#+       +#+ +#+    +#+ +#+    +#+             
-#    #+#  #+#     #+# #+#       #+# #+#    #+# #+#    #+#             
-#    ###  ###     ### ###       ### #########   ########              
+#  /$$     /$$ /$$$$$$  /$$      /$$ /$$$$$$$   /$$$$$$               
+# |  $$   /$$//$$__  $$| $$$    /$$$| $$__  $$ /$$__  $$              
+#  \  $$ /$$/| $$  \ $$| $$$$  /$$$$| $$  \ $$| $$  \ $$              
+#   \  $$$$/ | $$$$$$$$| $$ $$/$$ $$| $$$$$$$ | $$  | $$              
+#    \  $$/  | $$__  $$| $$  $$$| $$| $$__  $$| $$  | $$              
+#     | $$   | $$  | $$| $$\  $ | $$| $$  \ $$| $$  | $$              
+#     | $$   | $$  | $$| $$ \/  | $$| $$$$$$$/|  $$$$$$/              
+#     |__/   |__/  |__/|__/     |__/|_______/  \______/               
 #                                                                     
-#                                                                     
-# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
-#                   Branch is parallel                                
-#                  MPI+HDF5_MPI_IO Build                              
-#                http://www.yambo-code.org                            
+# Version 5.2.3 Revision 22799 Hash (prev commit) bad66dc080          
+#                     Branch is main                                  
+#              MPI+SLEPC+HDF5_MPI_IO Build                            
+#                http://www.yambo-code.eu                             
 #
 excitons                         # [R] Excitonic properties
 interpolate                      # [R] Interpolate
-INTERP_mode= "BOLTZ"             # Interpolation mode (NN=nearest point, BOLTZ=boltztrap aproach)
+INTERP_mode= "BOLTZ"  # Interpolation mode (NN=nearest point, BOLTZ=boltztrap aproach)
 INTERP_Shell_Fac= 20.00000       # The bigger it is a higher number of shells is used
 INTERP_NofNN= 1                  # Number of Nearest sites in the NN method
-BANDS_steps= 100                 # Number of divisions
+BANDS_steps= 100  # Number of divisions
 cooIn= "rlu"                     # Points coordinates (in) cc/rlu/iku/alat
 cooOut= "rlu"                    # Points coordinates (out) cc/rlu/iku/alat
-States= "0 - 4"                  # Index of the BS state(s)
+States= "1 - 4"  # Index of the BS state(s)
 % INTERP_Grid
 -1 |-1 |-1 |                             # Interpolation BZ Grid
 %

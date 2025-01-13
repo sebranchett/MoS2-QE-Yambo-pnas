@@ -15,5 +15,5 @@ set ylabel 'Exiton energy (eV)'
 set xrange [ 0 : 0.6 ]
 set yrange [ -0.7 : 2.4 ]
 set xzeroaxis
-plot 'o-BSE.excitons_interpolated' using 1:2 with l lt rgb "#000000" title "BSE exciton"
+plot 'output/o-BSE.excitons_interpolated' using 1:2 with l lt rgb "#000000" title "BSE exciton"
 EOF

@@ -1,54 +1,40 @@
 #                                                                     
-#  __  __   ________   ___ __ __    _______   ______                  
-# /_/\/_/\ /_______/\ /__//_//_/\ /_______/\ /_____/\                 
-# \ \ \ \ \\::: _  \ \\::\| \| \ \\::: _  \ \\:::_ \ \                
-#  \:\_\ \ \\::(_)  \ \\:.      \ \\::(_)  \/_\:\ \ \ \               
-#   \::::_\/ \:: __  \ \\:.\-/\  \ \\::  _  \ \\:\ \ \ \              
-#     \::\ \  \:.\ \  \ \\. \  \  \ \\::(_)  \ \\:\_\ \ \             
-#      \__\/   \__\/\__\/ \__\/ \__\/ \_______\/ \_____\/             
+# :   :::   :::     ::::    ::::  :::::::::   ::::::::                
+# :+:   :+: :+: :+:   +:+:+: :+:+:+ :+:    :+: :+:    :+              
+#  +:+ +:+ +:+   +:+  +:+ +:+:+ +:+ +:+    +:+ +:+    +:+             
+#   +#++: +#++:++#++: +#+  +:+  +#+ +#++:++#+  +#+    +:+             
+#    +#+  +#+     +#+ +#+       +#+ +#+    +#+ +#+    +#+             
+#    #+#  #+#     #+# #+#       #+# #+#    #+# #+#    #+#             
+#    ###  ###     ### ###       ### #########   ########              
 #                                                                     
 #                                                                     
-# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
-#                   Branch is parallel                                
-#                  MPI+HDF5_MPI_IO Build                              
-#                http://www.yambo-code.org                            
+# Version 5.2.3 Revision 22799 Hash (prev commit) bad66dc080          
+#                     Branch is main                                  
+#               MPI+SLEPC+HDF5_MPI_IO Build                           
+#                http://www.yambo-code.eu                             
 #
 gw0                              # [R] GW approximation
 ppa                              # [R][Xp] Plasmon Pole Approximation for the Screened Interaction
 el_el_corr                       # [R] Electron-Electron Correlation
 HF_and_locXC                     # [R] Hartree-Fock
 em1d                             # [R][X] Dynamically Screened Interaction
-EXXRLvcs=  68              Ry    # [XX] Exchange    RL components
-VXCRLvcs=  15              Ry    # [XC] XCpotential RL components
+EXXRLvcs=  68 Ry  # [XX] Exchange    RL components
+VXCRLvcs=  15 Ry  # [XC] XCpotential RL components
 Chimod= "HARTREE"                # [X] IP/Hartree/ALDA/LRC/PF/BSfxc
 % BndsRnXp
    1 | 102 |                         # [Xp] Polarization function bands
 %
-NGsBlkXp=   5              Ry    # [Xp] Response block size
+NGsBlkXp=  5 Ry  # [Xp] Response block size
 % LongDrXp
- 1.000000 | 0.000000 | 0.000000 |        # [Xp] [cc] Electric Field
+  1.000000 | 1.000000 | 1.000000 |  # [Xp] [cc] Electric Field
 %
 PPAPntXp= 27.21138         eV    # [Xp] PPA imaginary energy
 UseEbands
 % GbndRnge
    1 | 102 |                         # [GW] G[W] bands range
 %
-GTermKind= "BG"                  # [GW] GW terminator ("none","BG" Bruneval-Gonze,"BRS" Berger-Reining-Sottile)
+GTermKind= "BG"  # [GW] GW terminator ("none","BG" Bruneval-Gonze,"BRS" Berger-Reining-Sottile)
 DysSolver= "n"                   # [GW] Dyson Equation solver ("n","s","g","q")
 %QPkrange                        # [GW] QP generalized Kpoint/Band indices
 1|10|1|102|
 %
-
-# Dipoles
-DIP_ROLEs= "k c v"                             # CPUs roles (k,c,v)
-DIP_CPU= "24 24 24"  # CPUs for each role
-DIP_Threads= 0
-# Response functions
-X_all_q_ROLEs= "q g k c v"                     # CPUs roles (q,g,k,c,v)
-X_all_q_CPU= "2 2 24 24 24"  # CPUs for each role
-X_Threads= 0
-# Self-energy
-SE_ROLEs= "q qp b"                             # CPUs roles (q,qp,b)
-SE_CPU= " 2 2 24"          # CPUs for each role
-SE_Threads= 0
-

@@ -1,17 +1,17 @@
 #                                                                     
-#  __  __   ________   ___ __ __    _______   ______                  
-# /_/\/_/\ /_______/\ /__//_//_/\ /_______/\ /_____/\                 
-# \ \ \ \ \\::: _  \ \\::\| \| \ \\::: _  \ \\:::_ \ \                
-#  \:\_\ \ \\::(_)  \ \\:.      \ \\::(_)  \/_\:\ \ \ \               
-#   \::::_\/ \:: __  \ \\:.\-/\  \ \\::  _  \ \\:\ \ \ \              
-#     \::\ \  \:.\ \  \ \\. \  \  \ \\::(_)  \ \\:\_\ \ \             
-#      \__\/   \__\/\__\/ \__\/ \__\/ \_______\/ \_____\/             
+#  /$$     /$$ /$$$$$$  /$$      /$$ /$$$$$$$   /$$$$$$               
+# |  $$   /$$//$$__  $$| $$$    /$$$| $$__  $$ /$$__  $$              
+#  \  $$ /$$/| $$  \ $$| $$$$  /$$$$| $$  \ $$| $$  \ $$              
+#   \  $$$$/ | $$$$$$$$| $$ $$/$$ $$| $$$$$$$ | $$  | $$              
+#    \  $$/  | $$__  $$| $$  $$$| $$| $$__  $$| $$  | $$              
+#     | $$   | $$  | $$| $$\  $ | $$| $$  \ $$| $$  | $$              
+#     | $$   | $$  | $$| $$ \/  | $$| $$$$$$$/|  $$$$$$/              
+#     |__/   |__/  |__/|__/     |__/|_______/  \______/               
 #                                                                     
-#                                                                     
-# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
-#                   Branch is parallel                                
-#                  MPI+HDF5_MPI_IO Build                              
-#                http://www.yambo-code.org                            
+# Version 5.2.3 Revision 22799 Hash (prev commit) bad66dc080          
+#                     Branch is main                                  
+#              MPI+SLEPC+HDF5_MPI_IO Build                            
+#                http://www.yambo-code.eu                             
 #
 screen                           # [R] Inverse Dielectric/Response Matrix
 em1s                             # [R][Xs] Statically Screened Interaction
@@ -20,7 +20,7 @@ Chimod= "HARTREE"                # [X] IP/Hartree/ALDA/LRC/PF/BSfxc
 % BndsRnXs
    1 | 102 |                         # [Xs] Polarization function bands
 %
-NGsBlkXs= 5                Ry    # [Xs] Response block size
+NGsBlkXs= 5 Ry  # [Xs] Response block size
 % LongDrXs
- 1.000000 | 1.000000 | 1.000000 |        # [Xs] [cc] Electric Field
+  1.000000 | 1.000000 | 1.000000 |  # [Xs] [cc] Electric Field
 %

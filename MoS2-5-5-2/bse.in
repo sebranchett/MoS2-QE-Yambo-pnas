@@ -8,27 +8,26 @@
 #      \__\/   \__\/\__\/ \__\/ \__\/ \_______\/ \_____\/             
 #                                                                     
 #                                                                     
-# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
-#                   Branch is parallel                                
-#                  MPI+HDF5_MPI_IO Build                              
-#                http://www.yambo-code.org                            
+# Version 5.2.3 Revision 22799 Hash (prev commit) bad66dc080          
+#                     Branch is main                                  
+#               MPI+SLEPC+HDF5_MPI_IO Build                           
+#                http://www.yambo-code.eu                             
 #
 optics                           # [R] Linear Response optical properties
 bss                              # [R] BSE solver
 bse                              # [R][BSE] Bethe Salpeter Equation.
 dipoles                          # [R] Oscillator strenghts (or dipoles)
-PAR_def_mode= "memory"           # [PARALLEL] Default distribution mode ("balanced"/"memory"/"workload"/"KQmemory")
 BSKmod= "SEX"                    # [BSE] IP/Hartree/HF/ALDA/SEX/BSfxc
 BSEmod= "resonant"               # [BSE] resonant/retarded/coupling
 BSSmod= "d"                      # [BSS] (h)aydock/(d)iagonalization/(s)lepc/(i)nversion/(t)ddft`
-BSENGexx=  68              Ry    # [BSK] Exchange components
-BSENGBlk=   5              Ry    # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]
+BSENGexx= 68 Ry  # [BSK] Exchange components
+BSENGBlk= 5 Ry  # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]
 #WehCpl                        # [BSK] eh interaction included also in coupling
 % BSEQptR
- 1 | 10 |                             # [BSK] Transferred momenta range
+ 1 | 10 |  # [BSK] Transferred momenta range
 %
 % BSEBands
-  47 |  62 |                     # [BSK] Bands range
+ 47 | 62 |  # [BSK] Bands range
 %
 % BEnRange
   0.00000 | 10.00000 |         eV    # [BSS] Energy range
@@ -38,9 +37,9 @@ BSENGBlk=   5              Ry    # [BSK] Screened interaction block size [if -1 
 %
 BEnSteps= 100                    # [BSS] Energy steps
 % BLongDir
- 1.000000 | 1.000000 | 1.000000 |        # [BSS] [cc] Electric Field
+ 1.000000 | 1.000000 | 1.000000 |  # [BSS] [cc] Electric Field
 %
 BSEprop= "abs"                   # [BSS] Can be any among abs/jdos/kerr/magn/dich/photolum/esrt
 BSEdips= "none"                  # [BSS] Can be "trace/none" or "xy/xz/yz" to define off-diagonal rotation plane
 WRbsWF                        # [BSS] Write to disk excitonic the WFs
-KfnQPdb= "E < output/gwppa.out/ndb.QP"  # [EXTQP BSK BSS] Database action
+KfnQPdb= "E < output/gwppa/ndb.QP"  # [EXTQP BSK BSS] Database action

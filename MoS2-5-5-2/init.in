@@ -8,10 +8,10 @@
 #    ###  ###     ### ###       ### #########   ########              
 #                                                                     
 #                                                                     
-# Version 5.1.0 Revision 22561 Hash (prev commit) 785b4fd6f           
-#                   Branch is parallel                                
-#                  MPI+HDF5_MPI_IO Build                              
-#                http://www.yambo-code.org                            
+# Version 5.2.3 Revision 22799 Hash (prev commit) bad66dc080          
+#                     Branch is main                                  
+#               MPI+SLEPC+HDF5_MPI_IO Build                           
+#                http://www.yambo-code.eu                             
 #
 setup                            # [R] Initialization
 MaxGvecs=  99839           RL    # [INI] Max number of G-vectors planned to use
