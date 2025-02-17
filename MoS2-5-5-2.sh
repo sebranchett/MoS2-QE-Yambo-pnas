@@ -11,22 +11,12 @@
 # find your account with:
 # sacctmgr list -sp user $USER
 
-module load 2023r1
-module load openmpi
-module load openblas
-module load fftw
-export CPATH=$FFTW_ROOT/include:$CPATH
-module load hdf5
-module load netcdf-c
-module load netcdf-fortran
-module load gnuplot
-# See QE Prerequisites
-export LC_ALL=C
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-QEDIR=/scratch/sbranchett/qe-yambo/q-e-qe-7.3.1
-YAMBODIR=/scratch/sbranchett/slepc-yambo/yambo-5.2.3
-export PATH=$PATH:$QEDIR/bin:$YAMBODIR/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$YAMBODIR/lib
+module use --append /projects/electronic_structure/.modulefiles
+module load qe
+module load yambo
+module load gnuplot
 
 # Reproducing this paper:
 # https://www.pnas.org/doi/full/10.1073/pnas.2010110118

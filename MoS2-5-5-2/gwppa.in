@@ -1,16 +1,16 @@
 #                                                                     
-# :   :::   :::     ::::    ::::  :::::::::   ::::::::                
-# :+:   :+: :+: :+:   +:+:+: :+:+:+ :+:    :+: :+:    :+              
-#  +:+ +:+ +:+   +:+  +:+ +:+:+ +:+ +:+    +:+ +:+    +:+             
-#   +#++: +#++:++#++: +#+  +:+  +#+ +#++:++#+  +#+    +:+             
-#    +#+  +#+     +#+ +#+       +#+ +#+    +#+ +#+    +#+             
-#    #+#  #+#     #+# #+#       #+# #+#    #+# #+#    #+#             
-#    ###  ###     ### ###       ### #########   ########              
+#  __  __   ________   ___ __ __    _______   ______                  
+# /_/\/_/\ /_______/\ /__//_//_/\ /_______/\ /_____/\                 
+# \ \ \ \ \\::: _  \ \\::\| \| \ \\::: _  \ \\:::_ \ \                
+#  \:\_\ \ \\::(_)  \ \\:.      \ \\::(_)  \/_\:\ \ \ \               
+#   \::::_\/ \:: __  \ \\:.\-/\  \ \\::  _  \ \\:\ \ \ \              
+#     \::\ \  \:.\ \  \ \\. \  \  \ \\::(_)  \ \\:\_\ \ \             
+#      \__\/   \__\/\__\/ \__\/ \__\/ \_______\/ \_____\/             
 #                                                                     
 #                                                                     
 # Version 5.2.3 Revision 22799 Hash (prev commit) bad66dc080          
 #                     Branch is main                                  
-#               MPI+SLEPC+HDF5_MPI_IO Build                           
+#           MPI+OpenMP+SLEPC+HDF5_MPI_IO Build                        
 #                http://www.yambo-code.eu                             
 #
 gw0                              # [R] GW approximation
@@ -18,6 +18,9 @@ ppa                              # [R][Xp] Plasmon Pole Approximation for the Sc
 el_el_corr                       # [R] Electron-Electron Correlation
 HF_and_locXC                     # [R] Hartree-Fock
 em1d                             # [R][X] Dynamically Screened Interaction
+X_Threads=0                      # [OPENMP/X] Number of threads for response functions
+DIP_Threads=0                    # [OPENMP/X] Number of threads for dipoles
+SE_Threads=0                     # [OPENMP/GW] Number of threads for self-energy
 EXXRLvcs=  68 Ry  # [XX] Exchange    RL components
 VXCRLvcs=  15 Ry  # [XC] XCpotential RL components
 Chimod= "HARTREE"                # [X] IP/Hartree/ALDA/LRC/PF/BSfxc

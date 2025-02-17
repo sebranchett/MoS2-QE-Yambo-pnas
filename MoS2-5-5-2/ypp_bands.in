@@ -10,7 +10,7 @@
 #                                                                     
 # Version 5.2.3 Revision 22799 Hash (prev commit) bad66dc080          
 #                     Branch is main                                  
-#               MPI+SLEPC+HDF5_MPI_IO Build                           
+#           MPI+OpenMP+SLEPC+HDF5_MPI_IO Build                        
 #                http://www.yambo-code.eu                             
 #
 electrons                        # [R] Electronic properties
