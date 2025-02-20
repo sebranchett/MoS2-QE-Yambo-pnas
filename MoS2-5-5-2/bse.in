@@ -1,11 +1,11 @@
 #                                                                     
-#   __   __     _        __  __       ____      U  ___  u             
-#   \ \ / / U  /"\  U u |" \/ "| u U | __") u    \/"_ \/              
-#    \ V /   \/ _ \/   \| |\/| |/   \|  _ \/     | | | |              
-#   U_|"|_u  / ___ \    | |  | |     | |_) | .-,_| |_| |              
-#     |_|   /_/   \_\   |_|  |_|     |____/   \_)-\___/               
-# .-,//|(_   \\    >>  <<,-,,-.     _|| \\_        \\                 
-#  \_) (__) (__)  (__)  (./  \.)   (__) (__)      (__)                
+#                                                                     
+# Y88b    /   e           e    e      888~~\    ,88~-_                
+#  Y88b  /   d8b         d8b  d8b     888   |  d888   \               
+#   Y88b/   /Y88b       d888bdY88b    888 _/  88888    |              
+#    Y8Y   /  Y88b     / Y88Y Y888b   888  \  88888    |              
+#     Y   /____Y88b   /   YY   Y888b  888   |  Y888   /               
+#    /   /      Y88b /          Y888b 888__/    `88_-~                
 #                                                                     
 #                                                                     
 # Version 5.2.3 Revision 22799 Hash (prev commit) bad66dc080          
@@ -23,6 +23,9 @@ K_Threads=0                      # [OPENMP/BSK] Number of threads for response f
 BSKmod= "SEX"                    # [BSE] IP/Hartree/HF/ALDA/SEX/BSfxc
 BSEmod= "resonant"               # [BSE] resonant/retarded/coupling
 BSSmod= "d"                      # [BSS] (h)aydock/(d)iagonalization/(s)lepc/(i)nversion/(t)ddft`
+BSSNEig= 55
+BSSEnTarget= 1.50 eV
+BSSSlepcMaxIt=0
 BSENGexx= 68 Ry  # [BSK] Exchange components
 BSENGBlk= 5 Ry  # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]
 #WehCpl                        # [BSK] eh interaction included also in coupling

@@ -28,17 +28,23 @@ WORKDIR=${PWD}/MoS2-5-5-2
 cd "$WORKDIR"
 
 # Set up calculation parameters
+# GW bands for correction calculation - QPkrange
+Number_valence_bands_gw=6
+Number_conduction_bands_gw=10
 # GW bands for plot
-Number_valence_bands_gw=3
-Number_conduction_bands_gw=7
+Number_valence_bands_gw_p=3
+Number_conduction_bands_gw_p=7
 # BSE bands for calculation - BSEBands
-Number_valence_bands_bse=6
-Number_conduction_bands_bse=10
+Number_valence_bands_bse=${Number_valence_bands_gw}
+Number_conduction_bands_bse=${Number_conduction_bands_gw}
 # BSE excitons to plot
 Number_excitons=4
 # GW and BSE
+# EXXRLvcs/BSENGexx
 Exchange_components_Ry=68
+# VXCRLvcs
 XCpotential_components_Ry=15
+# NGsBlkXp/NGsBlkXs
 Response_block_size_Ry=5
 
 # DFT with Quantum Espresso
@@ -54,6 +60,7 @@ srun pw.x < mos2-nscf.in > output/mos2-nscf.out
 cd MoS2.save
 srun p2y > ../output/mos2-p2y.out
 cd ..
+# mos2-p2y.out is empty if all went well
 
 # Copy the converted Qantum Espresso DFT data
 cp -rf MoS2.save/SAVE SAVE
@@ -65,9 +72,16 @@ yambo -i -V RL -F init.in
 srun yambo -F init.in -J output/init
 # report at output/r-init_setup
 
+# Find model characteristics
+kpoints=$(grep 'IBZ K-points' output/r-init_setup | awk '{print $4}')
+qpoints=$(grep 'IBZ Q-points' output/r-init_setup | awk '{print $4}')
 Highest_valence_band=$(grep 'Filled Bands' output/r-init_setup | awk '{print $5}')
+
+# Calculate band indices
 Lower_band_gw=$((${Highest_valence_band} + 1 - ${Number_valence_bands_gw}))
 Upper_band_gw=$((${Highest_valence_band} + ${Number_conduction_bands_gw}))
+Lower_band_gw_p=$((${Highest_valence_band} + 1 - ${Number_valence_bands_gw_p}))
+Upper_band_gw_p=$((${Highest_valence_band} + ${Number_conduction_bands_gw_p}))
 Lower_band_bse=$((${Highest_valence_band} + 1 - ${Number_valence_bands_bse}))
 Upper_band_bse=$((${Highest_valence_band} + ${Number_conduction_bands_bse}))
 
@@ -91,6 +105,14 @@ sed -i "/remove this line and the next/,+1d" gwppa.in
 # now add in the new direction
 sed -i "/LongDrXp/a \  1.000000 | 1.000000 | 1.000000 |  # [Xp] [cc] Electric Field" gwppa.in
 
+# reduce the number of bands to calculate the correction for
+# first add a dummy line below QPkrange
+sed -i "/QPkrange/a remove this line and the next" gwppa.in
+# now remove the dummy line and the line below
+# now add all the k points and the required bands
+sed -i "/remove this line and the next/,+1d" gwppa.in
+sed -i "/QPkrange/a \ 1 | ${kpoints} | ${Lower_band_gw} | ${Upper_band_gw} |" gwppa.in
+
 # and run the GW calculation:
 srun yambo -F gwppa.in -J output/gwppa
 # report at output/r-gwppa_HF_and_locXC_gw0_em1d_ppa_el_el_corr
@@ -110,7 +132,7 @@ sed -i "/BANDS_bands/a remove this line and the next" ypp_bands.in
 # now remove the dummy line and the line below, which has the default band range
 sed -i "/remove this line and the next/,+1d" ypp_bands.in
 # now add in the new band range
-sed -i "/BANDS_bands/a \  ${Lower_band_gw} | ${Upper_band_gw} |  # Number of bands" ypp_bands.in
+sed -i "/BANDS_bands/a \  ${Lower_band_gw_p} | ${Upper_band_gw_p} |  # Number of bands" ypp_bands.in
 # add path in K-space
 sed -i "/%BANDS_kpts /a \ 0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |" ypp_bands.in
 # edit number of steps along path
@@ -134,26 +156,20 @@ srun ypp -F ypp_bands.in
 mv -f o.bands_interpolated o.bands_interpolated_gw
 
 # DFT and bands
-gnuplot <<\EOF
+cat > $SLURM_JOB_ID.gplot <<\EOF
 set terminal png size 500,400
 set output 'interpolated.png'
 set title 'DFT and GW bands along Gamma-Kappa path'
 set xlabel '|k| (a.u.)'
 set ylabel 'Energy (eV)'
 plot 'o.bands_interpolated_dft' using 1:2 w l linetype 7 title "DFT", \
-     'o.bands_interpolated_dft' using 1:3 w l linetype 7 notitle, \
-     'o.bands_interpolated_dft' using 1:5 w l linetype 7 notitle, \
-     'o.bands_interpolated_dft' using 1:7 w l linetype 7 notitle, \
-     'o.bands_interpolated_dft' using 1:9 w l linetype 7 notitle, \
-     'o.bands_interpolated_dft' using 1:11 w l linetype 7 notitle, \
+     for [i=3:Last_column] 'o.bands_interpolated_dft' using 1:i w l linetype 7 notitle, \
      'o.bands_interpolated_gw' using 1:2 w l linetype -1 title "GW", \
-     'o.bands_interpolated_gw' using 1:3 w l linetype -1 notitle, \
-     'o.bands_interpolated_gw' using 1:5 w l linetype -1 notitle, \
-     'o.bands_interpolated_gw' using 1:7 w l linetype -1 notitle, \
-     'o.bands_interpolated_gw' using 1:9 w l linetype -1 notitle, \
-     'o.bands_interpolated_gw' using 1:11 w l linetype -1 notitle
+     for [i=3:Last_column] 'o.bands_interpolated_gw' using 1:i w l linetype -1 notitle
 EOF
+gnuplot -e "Last_column=$((${Number_valence_bands_gw_p} + ${Number_conduction_bands_gw_p} + 1))" $SLURM_JOB_ID.gplot
 mv -f interpolated.png interpolated_$SLURM_JOB_NAME.png
+rm $SLURM_JOB_ID.gplot
 
 # BSE
 
@@ -170,8 +186,6 @@ sed -i "/LongDrXs/a \  1.000000 | 1.000000 | 1.000000 |  # [Xs] [cc] Electric Fi
 # Run static screening
 srun yambo -F statscreen.in -J output/BSE
 # report at output/r-BSE_screen_dipoles_em1s
-# Find the number of q-points
-qpoints=$(grep 'IBZ Q-points' output/r-BSE_screen_dipoles_em1s | awk '{print $4}')
 
 # Bethe-Salpeter
 # Create input
@@ -187,6 +201,10 @@ sed -i "s/.*# \[BSK\] Transferred momenta range/ 1 | ${qpoints} |  # [BSK] Trans
 sed -i "s/#WRbsWF/WRbsWF/" bse.in
 # Read the QP corrections from previous GW calculation
 sed -i "/WRbsWF/a KfnQPdb= \"E < output\/gwppa\/ndb.QP\"  # [EXTQP BSK BSS] Database action" bse.in
+
+# Add extra parameters for SLEPC solver
+# see: https://wiki.yambo-code.eu/wiki/index.php/Bethe-Salpeter_solver:_SLEPC
+sed -i '/BSSmod/a BSSNEig= 55\nBSSEnTarget= 1.50 eV\nBSSSlepcMaxIt=0' bse.in
 
 # edit BLongDir
 sed -i "/% BLongDir/a remove this line and the next" bse.in
