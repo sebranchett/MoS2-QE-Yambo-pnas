@@ -1,0 +1,52 @@
+&control
+    calculation   = 'vc-relax',
+    prefix        = 'MoS2-geom',
+    wf_collect    = .true.,
+    outdir        = './output',
+    pseudo_dir    = './',
+    forc_conv_thr = 1e-4,
+    etot_conv_thr = 1e-5,
+/
+
+&system
+    ibrav           = 0,
+    nat             = 6,
+    ntyp            = 2,
+    ecutwfc         = 100.0,
+    vdw_corr        = 'Grimme-D2'
+    nbnd            = 102,
+    noncolin        = .true.
+    lspinorb        = .true.
+    force_symmorphic  =.true.
+/
+
+&electrons
+    conv_thr=1e-8,
+/
+
+&ions
+/
+
+&cell
+    cell_dofree='all'
+/
+
+ATOMIC_SPECIES
+    Mo 97.905406 'Mo_ONCV_PBE_FR-1.0.upf'
+    S 31.972070 'S_ONCV_PBE_FR-1.1.upf'
+
+ATOMIC_POSITIONS angstrom
+    Mo      -0.000000449   1.842989702   3.102116604
+    Mo       1.596076126   0.921494463   9.306349813
+    S        1.596081426   0.921491403   1.544213735
+    S        1.596081426   0.921491403   4.660019473
+    S       -0.000005749   1.842992762   7.748446945
+    S       -0.000005749   1.842992762  10.864252682
+
+CELL_PARAMETERS angstrom
+   3.192161542  -0.000000353  0.000000000
+   -1.596081076  2.764492811  0.000000000
+   0.000000000  0.000000000  12.408466410
+
+K_POINTS automatic
+  5 5 2 0 0 0
