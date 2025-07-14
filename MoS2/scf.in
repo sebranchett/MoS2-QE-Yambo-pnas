@@ -1,11 +1,8 @@
 &control
-    calculation   = 'vc-relax',
-    prefix        = 'MoS2-geom',
+    calculation   = 'scf',
+    prefix        = 'MoS2',
     wf_collect    = .true.,
-    outdir        = './output',
     pseudo_dir    = './',
-    forc_conv_thr = 1e-4,
-    etot_conv_thr = 1e-5,
 /
 
 &system
@@ -13,7 +10,7 @@
     nat             = 6,
     ntyp            = 2,
     ecutwfc         = 100.0,
-    vdw_corr        = 'Grimme-D2'
+    vdw_corr        = 'Grimme-D3'
     nbnd            = 102,
     noncolin        = .true.
     lspinorb        = .true.
@@ -21,14 +18,10 @@
 /
 
 &electrons
-    conv_thr=1e-8,
+    diago_full_acc  =.true.
 /
 
 &ions
-/
-
-&cell
-    cell_dofree='all'
 /
 
 ATOMIC_SPECIES

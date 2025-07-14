@@ -7,6 +7,7 @@
 #SBATCH --ntasks=24
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=3900MB
+# #SBATCH --mail-type=ALL
 
 # find your account with:
 # sacctmgr list -sp user $USER
