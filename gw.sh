@@ -44,8 +44,8 @@ dft_nbnd=$(grep "Empty Bands" output/r-init_setup | awk '{print $6}')
 # 1 - these parameters need to be converged
 
 # GW bands for correction calculation - QPkrange
-Number_valence_bands_gw=6
-Number_conduction_bands_gw=10
+Number_valence_bands_gw=4
+Number_conduction_bands_gw=8
 
 # EXXRLvcs
 Exchange_components_Ry=68
@@ -72,8 +72,8 @@ k_max=${kpoints}
 LongDrXp=' 1.000000 | 1.000000 | 1.000000 |'
 
 # GW bands for plot
-Number_valence_bands_gw_p=3
-Number_conduction_bands_gw_p=7
+Number_valence_bands_gw_p=${Number_valence_bands_gw}
+Number_conduction_bands_gw_p=${Number_conduction_bands_gw}
 # Bands path, divisions in k-space and title for plotting
 BANDS_kpts='0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |'
 BANDS_steps=50
@@ -98,7 +98,6 @@ sed -i "s/EXXRLvcs.*/EXXRLvcs=  ${Exchange_components_Ry} Ry  # [XX] Exchange   
 sed -i "s/VXCRLvcs.*/VXCRLvcs=  ${XCpotential_components_Ry} Ry  # [XC] XCpotential RL components/" gwppa.in
 sed -i "s/NGsBlkXp.*/NGsBlkXp=  ${Response_block_size_Ry} Ry  # [Xp] Response block size/" gwppa.in
 sed -i "s/GTermKind.*/GTermKind= \"BG\"  # [GW] GW terminator (\"none\",\"BG\" Bruneval-Gonze,\"BRS\" Berger-Reining-Sottile)/" gwppa.in
-sed -i "/GbndRnge/i UseEbands" gwppa.in
 
 # edit the LongDrXp direction
 # first add a dummy line below LongDrXp
