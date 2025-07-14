@@ -15,22 +15,38 @@ module use --append /projects/electronic_structure/.modulefiles
 module load yambo
 module load gnuplot
 
-# Reproducing this paper:
-# https://www.pnas.org/doi/full/10.1073/pnas.2010110118
-# Evidence of ideal excitonic insulator in bulk MoS2 under pressure
-# Input file generated using AMS for Quantum Espresso
-# Pseudopotentials from https://www.physics.rutgers.edu/gbrv/
+###############################################################################
+# Initial set up
+###############################################################################
 
 WORKDIR=${PWD}/MoS2
 cd "$WORKDIR"
 
-# Set up calculation parameters
+mkdir -p output
+# Find the prefix name from the scf.in file and copy the converted QE DFT data
+prefix=$(grep prefix scf.in | awk '{print $3}' | tr -d '[:punct:]')
+cp -rf ${prefix}.save/SAVE SAVE
+
+# Create initialisation file (init.in) for Yambo and run the initialisation
+rm -f init.in
+yambo -i -V RL -F init.in  # this creates the input file
+srun yambo -F init.in -J output/init  # this runs the initialisation
+# Yambo report at output/r-init_setup
+
+# Find model characteristics
+kpoints=$(grep 'IBZ K-points' output/r-init_setup | awk '{print $4}')
+Highest_valence_band=$(grep 'Filled Bands' output/r-init_setup | awk '{print $5}')
+dft_nbnd=$(grep "Empty Bands" output/r-init_setup | awk '{print $6}')
+
+###############################################################################
+# USER PARAMETERS - These parameters change a lot for different calculations
+###############################################################################
+# 1 - these parameters need to be converged
+
 # GW bands for correction calculation - QPkrange
 Number_valence_bands_gw=6
 Number_conduction_bands_gw=10
-# GW bands for plot
-Number_valence_bands_gw_p=3
-Number_conduction_bands_gw_p=7
+
 # EXXRLvcs
 Exchange_components_Ry=68
 # VXCRLvcs
@@ -38,29 +54,34 @@ XCpotential_components_Ry=15
 # NGsBlkXp
 Response_block_size_Ry=5
 
+# BndsRnXp - Polarization function bands
+pol_bnd_min=1
+pol_bnd_max=${dft_nbnd}
+# GbndRnge - G[W] bands range
+g_bnd_min=1
+g_bnd_max=${dft_nbnd}
+
+# QPkrange - QP generalized Kpoint/Band indices
+# The k-point range can be reduced when convergence testing
+k_min=1
+k_max=${kpoints}
+
+# 2 - these parameters do not need to be converged
+
 # Electric Field
 LongDrXp=' 1.000000 | 1.000000 | 1.000000 |'
-# Bands path, divisions in k-space and title
+
+# GW bands for plot
+Number_valence_bands_gw_p=3
+Number_conduction_bands_gw_p=7
+# Bands path, divisions in k-space and title for plotting
 BANDS_kpts='0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |'
 BANDS_steps=50
 Band_plot_title='"DFT and GW bands along Gamma-Kappa path"'
 
-mkdir -p output
-# Copy the converted Qantum Espresso DFT data
-# Find the prefix name from the scf.in file
-prefix=$(grep prefix scf.in | awk '{print $3}' | tr -d '[:punct:]')
-cp -rf ${prefix}.save/SAVE SAVE
-
-# Create initialisation file (init.in) for Yambo
-rm -f init.in
-yambo -i -V RL -F init.in
-# and run it:
-srun yambo -F init.in -J output/init
-# Yambo report at output/r-init_setup
-
-# Find model characteristics
-kpoints=$(grep 'IBZ K-points' output/r-init_setup | awk '{print $4}')
-Highest_valence_band=$(grep 'Filled Bands' output/r-init_setup | awk '{print $5}')
+###############################################################################
+# GW
+###############################################################################
 
 # Calculate band indices
 Lower_band_gw=$((${Highest_valence_band} + 1 - ${Number_valence_bands_gw}))
@@ -93,11 +114,31 @@ sed -i "/QPkrange/a remove this line and the next" gwppa.in
 # now remove the dummy line and the line below
 # now add all the k points and the required bands
 sed -i "/remove this line and the next/,+1d" gwppa.in
-sed -i "/QPkrange/a \ 1 | ${kpoints} | ${Lower_band_gw} | ${Upper_band_gw} |" gwppa.in
+sed -i "/QPkrange/a \ ${k_min} | ${k_max} | ${Lower_band_gw} | ${Upper_band_gw} |" gwppa.in
+
+# reduce the number of bands for the polarization function
+# first add a dummy line below BndsRnXp
+sed -i "/BndsRnXp/a remove this line and the next" gwppa.in
+# now remove the dummy line and the line below
+sed -i "/remove this line and the next/,+1d" gwppa.in
+# now add the bands range
+sed -i "/BndsRnXp/a \ ${pol_bnd_min} | ${pol_bnd_max} |  # [Xp] Polarization function bands" gwppa.in
+
+# reduce the number of bands for G[W]
+# first add a dummy line below GbndRnge
+sed -i "/GbndRnge/a remove this line and the next" gwppa.in
+# now remove the dummy line and the line below
+sed -i "/remove this line and the next/,+1d" gwppa.in
+# now add the bands range
+sed -i "/GbndRnge/a \ ${g_bnd_min} | ${g_bnd_max} |  # [GW] G[W] bands range" gwppa.in
 
 # and run the GW calculation:
 srun yambo -F gwppa.in -J output/gwppa
 # Yambo report at output/r-gwppa_HF_and_locXC_gw0_em1d_ppa_el_el_corr
+
+###############################################################################
+# Plot the results
+###############################################################################
 
 # Following step 3 of this tutorial to draw band structures
 # https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN
