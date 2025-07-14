@@ -41,13 +41,13 @@ XCpotential_components_Ry=15
 # NGsBlkXs
 Response_block_size_Ry=5
 
-# BSEQptR
+# BSEQptR - number of centre of mass momenta of the exciton
 q_min=1
 q_max=${qpoints}
 
 # 2 - these parameters do not need to be converged
 
-# BLongDir - Electric Field
+# BLongDir - Electric Field - depends on polarisation of light
 BLongDir=' 1.000000 | 1.000000 | 1.000000 |'
 
 # Add extra parameters for SLEPC solver
