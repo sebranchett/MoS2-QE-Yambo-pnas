@@ -44,8 +44,8 @@ dft_nbnd=$(grep "Empty Bands" output/r-init_setup | awk '{print $6}')
 # 1 - these parameters need to be converged
 
 # GW bands for correction calculation - QPkrange
-Number_valence_bands_gw=4
-Number_conduction_bands_gw=8
+Number_valence_bands_gw=6
+Number_conduction_bands_gw=10
 
 # EXXRLvcs
 Exchange_components_Ry=68

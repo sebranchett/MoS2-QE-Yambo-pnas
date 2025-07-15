@@ -31,8 +31,8 @@ Highest_valence_band=$(grep 'Filled Bands' output/r-init_setup | awk '{print $5}
 # 1 - these parameters need to be converged
 
 # BSE bands for calculation - BSEBands
-Number_valence_bands_bse=4
-Number_conduction_bands_bse=8
+Number_valence_bands_bse=6
+Number_conduction_bands_bse=10
 
 # BSENGexx
 Exchange_components_Ry=68
