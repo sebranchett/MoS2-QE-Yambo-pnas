@@ -54,7 +54,7 @@ BLongDir=' 1.000000 | 1.000000 | 1.000000 |'
 # Choose the solver, (d)iagonalization is the default
 BSSmod=s
 # Number of states to look for
-BSSNEig=55
+BSSNEig=1000
 # Energy around with to look
 BSSEnTarget="1.50 eV"
 # Number of iterations, 0 is automatic
@@ -110,11 +110,12 @@ srun yambo -F bse.in -J "output/gwppa,output/BSE"
 # report at output/r-gwppa_optics_dipoles_bss_bse
 
 # Plot the Optical Absorption
+cp output/o-gwppa.eps_q1_*_bse output/o-gwppa.eps_q1_bse  # diago or slepc
 gnuplot  <<\EOF
 set terminal png size 500,400
 set output 'BSE-optical-absorption.png'
 set title 'BSE Optical absorption vs. Energy (eV)'
-plot 'output/o-gwppa.eps_q1_diago_bse' u 1:2 w l
+plot 'output/o-gwppa.eps_q1_bse' u 1:2 w l
 EOF
 mv -f BSE-optical-absorption.png BSE-optical-absorption_$SLURM_JOB_NAME.png
 
@@ -162,7 +163,7 @@ if [[ "${q_min}" == "1" && "${q_max}" == "${qpoints}" ]]; then
   set ylabel 'Exiton energy (eV)'
   set yrange [ 0 : ]
   plot for [i=2:Last_column] 'output/o-BSE.excitons_interpolated' using 1:i with l title "Exciton ".(i-1)
-  EOF
+EOF
   gnuplot -e "Last_column=$((${Number_excitons} + 1))" -e "Band_plot_title=${Band_plot_title}" $SLURM_JOB_ID.gplot
   mv -f BSE-exciton-along-path.png BSE-exciton-along-path_$SLURM_JOB_NAME.png
   rm $SLURM_JOB_ID.gplot
