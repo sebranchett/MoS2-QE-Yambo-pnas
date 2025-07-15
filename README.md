@@ -13,6 +13,8 @@ Yambo input created following this tutorial: https://www.yambo-code.eu/wiki/inde
 
 In addition, this tutorial was helpful for the Yambo GW  calculation and band structure plots: https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN
 
+This tutorial was helpful for convergence testing: https://wiki.yambo-code.eu/wiki/index.php?title=Silicon
+
 In addition, these tutorials were helpful for the Yambo BSE calculation:
 * https://www.yambo-code.eu/wiki/index.php/Static_screening
 * https://www.yambo-code.eu/wiki/index.php/Bethe-Salpeter_kernel
