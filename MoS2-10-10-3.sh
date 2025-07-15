@@ -5,7 +5,7 @@
 #SBATCH --account=research-as-cheme
 #SBATCH --time=72:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks=24
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=64GB
 
