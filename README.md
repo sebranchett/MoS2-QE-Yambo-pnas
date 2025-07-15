@@ -42,13 +42,6 @@ Approximate timings:
 | GW          | 20 (m) | 7 (h)  | 15 (d) |
 | BSE         | 50 (m) | t.b.d. | t.b.d. |
 
-### Results
-![DFT and GW band results for 27x27x3 grid](./figures/bands-27-27-3.png)
-
-Compare to Figure 2A for P = 0 in [Ataei et.al. PNAS 2021](https://www.pnas.org/doi/full/10.1073/pnas.2010110118).
-
-![BSE exciton for 5x5x2 grid](./figures/exciton-5-5-2.png)
-
 N.B. These results are for the 5 x 5 x 2 grid.
 Compare to Figure 3A for P = 0 in [Ataei et.al. PNAS 2021](https://www.pnas.org/doi/full/10.1073/pnas.2010110118).
 

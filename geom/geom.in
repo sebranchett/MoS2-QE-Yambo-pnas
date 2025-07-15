@@ -1,8 +1,11 @@
 &control
-    calculation   = 'bands',
-    prefix        = 'MoS2',
+    calculation   = 'vc-relax',
+    prefix        = 'MoS2-geom',
     wf_collect    = .true.,
+    outdir        = './output',
     pseudo_dir    = './',
+    forc_conv_thr = 1e-4,
+    etot_conv_thr = 1e-5,
 /
 
 &system
@@ -18,15 +21,19 @@
 /
 
 &electrons
-    diago_full_acc  =.true.
+    conv_thr=1e-8,
 /
 
 &ions
 /
 
+&cell
+    cell_dofree='all'
+/
+
 ATOMIC_SPECIES
-    Mo 97.905406 'Mo_ONCV_PBE-1.2.upf'
-    S 31.972070 'S_ONCV_PBE-1.2.upf'
+    Mo 97.905406 'Mo_ONCV_PBE_FR-1.0.upf'
+    S 31.972070 'S_ONCV_PBE_FR-1.1.upf'
 
 ATOMIC_POSITIONS angstrom
     Mo      -0.000000449   1.842989702   3.102116604
@@ -41,9 +48,5 @@ CELL_PARAMETERS angstrom
    -1.596081076  2.764492811  0.000000000
    0.000000000  0.000000000  12.408466410
 
-K_POINTS tpiba_b
-3
- 0.000000000  0.000000000  0.000000000     5
- 0.173000000  0.301000000  0.000000000     5
- 0.347226026  0.601887358  0.000000000     5
-
+K_POINTS automatic
+  5 5 2 0 0 0
