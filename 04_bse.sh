@@ -4,7 +4,7 @@
 #SBATCH --partition=compute-p1,compute-p2
 #SBATCH --account=innovation
 #SBATCH --time=02:00:00
-#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks=24
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=3900MB
 
@@ -51,10 +51,17 @@ q_max=${qpoints}
 BLongDir=' 1.000000 | 1.000000 | 1.000000 |'
 
 # Add extra parameters for SLEPC solver
-# SEB
+# Choose the solver, (d)iagonalization is the default
+BSSmod=s
+# Number of states to look for
+BSSNEig=55
+# Energy around with to look
+BSSEnTarget="1.50 eV"
+# Number of iterations, 0 is automatic
+BSSSlepcMaxIt=0
 
 # BSE excitons to plot
-# SEB
+# Only useful if q_min=1 and qmax=q_points
 Number_excitons=4
 # Bands path, divisions and title for plotting
 BANDS_kpts='0.00000 |0.00000 |0.00000 |\n 0.33333 |0.33333 |0.00000 |'
@@ -85,7 +92,12 @@ sed -i "/WRbsWF/a KfnQPdb= \"E < output\/gwppa\/ndb.QP\"  # [EXTQP BSK BSS] Data
 
 # Add extra parameters for SLEPC solver
 # see: https://wiki.yambo-code.eu/wiki/index.php/Bethe-Salpeter_solver:_SLEPC
-sed -i '/BSSmod/a BSSNEig= 55\nBSSEnTarget= 1.50 eV\nBSSSlepcMaxIt=0' bse.in
+if [[ "${BSSmod}" == "s" ]]; then
+    sed -i "s/BSSmod.*/BSSmod= 's'  # [BSS] (h)aydock (d)iagonalization (s)lepc (i)nversion (t)ddft/" bse.in
+    sed -i "/BSSmod/a BSSSlepcMaxIt= ${BSSSlepcMaxIt}" bse.in
+    sed -i "/BSSmod/a BSSEnTarget= ${BSSEnTarget}" bse.in
+    sed -i "/BSSmod/a BSSNEig= ${BSSNEig}" bse.in
+fi
 
 # edit BLongDir
 sed -i "/% BLongDir/a remove this line and the next" bse.in
@@ -122,34 +134,37 @@ EOF
 mv -f BSE-exciton-strength.png BSE-exciton-strength_$SLURM_JOB_NAME.png
 
 # Interpolate exciton dispersion
-# Create the ypp input file:
-rm -f bse_exciton.in
-srun ypp -e i -F bse_exciton.in
+# Only useful if you calculate the BSE for all q-points
+if [[ "${q_min}" == "1" && "${q_max}" == "${qpoints}" ]]; then
+  # Create the ypp input file:
+  rm -f bse_exciton.in
+  srun ypp -e i -F bse_exciton.in
 
-# and edit it:
-sed -i "s/States=.*/States= \"1 - ${Number_excitons}\"  # Index of the BS state(s)/" bse_exciton.in
-# add path in K-space
-sed -i "/%BANDS_kpts /a \ ${BANDS_kpts}" bse_exciton.in
-# edit number of steps along path
-sed -i "s/BANDS_steps.*/BANDS_steps= ${BANDS_steps}  # Number of divisions/" bse_exciton.in
-# smooth the interpolation
-sed -i "s/INTERP_mode.*/INTERP_mode= \"BOLTZ\"  # Interpolation mode (NN=nearest point, BOLTZ=boltztrap aproach)/" bse_exciton.in
+  # and edit it:
+  sed -i "s/States=.*/States= \"1 - ${Number_excitons}\"  # Index of the BS state(s)/" bse_exciton.in
+  # add path in K-space
+  sed -i "/%BANDS_kpts /a \ ${BANDS_kpts}" bse_exciton.in
+  # edit number of steps along path
+  sed -i "s/BANDS_steps.*/BANDS_steps= ${BANDS_steps}  # Number of divisions/" bse_exciton.in
+  # smooth the interpolation
+  sed -i "s/INTERP_mode.*/INTERP_mode= \"BOLTZ\"  # Interpolation mode (NN=nearest point, BOLTZ=boltztrap aproach)/" bse_exciton.in
 
-# and run ypp:
-srun ypp -F bse_exciton.in -J "output/BSE,output/gwppa"
-# report at output/r-BSE_excitons_interpolate
+  # and run ypp:
+  srun ypp -F bse_exciton.in -J "output/BSE,output/gwppa"
+  # report at output/r-BSE_excitons_interpolate
 
-# Plot exciton energies
-cat > $SLURM_JOB_ID.gplot <<\EOF
-set terminal png size 500,400
-set output 'BSE-exciton-along-path.png'
-set title Band_plot_title
-set xlabel '|q| (a.u.)'
-set ylabel 'Exiton energy (eV)'
-set yrange [ 0 : ]
-plot for [i=2:Last_column] 'output/o-BSE.excitons_interpolated' using 1:i with l title "Exciton ".(i-1)
-EOF
-gnuplot -e "Last_column=$((${Number_excitons} + 1))" -e "Band_plot_title=${Band_plot_title}" $SLURM_JOB_ID.gplot
-mv -f BSE-exciton-along-path.png BSE-exciton-along-path_$SLURM_JOB_NAME.png
-rm $SLURM_JOB_ID.gplot
+  # Plot exciton energies
+  cat > $SLURM_JOB_ID.gplot <<\EOF
+  set terminal png size 500,400
+  set output 'BSE-exciton-along-path.png'
+  set title Band_plot_title
+  set xlabel '|q| (a.u.)'
+  set ylabel 'Exiton energy (eV)'
+  set yrange [ 0 : ]
+  plot for [i=2:Last_column] 'output/o-BSE.excitons_interpolated' using 1:i with l title "Exciton ".(i-1)
+  EOF
+  gnuplot -e "Last_column=$((${Number_excitons} + 1))" -e "Band_plot_title=${Band_plot_title}" $SLURM_JOB_ID.gplot
+  mv -f BSE-exciton-along-path.png BSE-exciton-along-path_$SLURM_JOB_NAME.png
+  rm $SLURM_JOB_ID.gplot
+fi
 
