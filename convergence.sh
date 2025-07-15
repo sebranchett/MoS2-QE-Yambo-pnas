@@ -29,12 +29,6 @@ YAMBODIR=/scratch/sbranchett/slepc-yambo/yambo-5.2.3
 export PATH=$PATH:$QEDIR/bin:$YAMBODIR/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$YAMBODIR/lib
 
-# Reproducing this paper:
-# https://www.pnas.org/doi/full/10.1073/pnas.2010110118
-# Evidence of ideal excitonic insulator in bulk MoS2 under pressure
-# Input file generated using AMS for Quantum Espresso
-# Pseudopotentials from https://www.physics.rutgers.edu/gbrv/
-
 WORKDIR=${PWD}/conv
 cd "$WORKDIR"
 
