@@ -43,6 +43,8 @@ The Yambo scripts have the following general structure:
 - 00_geom.sh - demonstrates how to optimise the geometry of the system using Quantum Espresso. This script requires:
   - geom.in - input file for the geometry optimisation calculation
   - pseudopotentials
+- qe_bands.sh - a script to calculate the DFT band structure using Quantum Espresso. This script requires:
+  - output from scf calculation
 - gw_convergence_eg.sh - a script that shows how a GW calculation can be run with different parameter values
 
 
