@@ -1,4 +1,5 @@
 &BANDS
  prefix='MoS2',
  filband='MoS2.bands',
+ lsym=.false.,
 /
