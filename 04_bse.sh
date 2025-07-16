@@ -56,7 +56,7 @@ BSSmod=s
 # Number of states to look for
 BSSNEig=1000
 # Energy around with to look
-BSSEnTarget="1.50 eV"
+BSSEnTarget="0.00 eV"
 # Number of iterations, 0 is automatic
 BSSSlepcMaxIt=0
 
