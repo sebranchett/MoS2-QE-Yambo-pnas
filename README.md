@@ -3,6 +3,9 @@ This repository contains a working example of how to perform DFT, GW, and BSE ca
 
 This working example is inspired by the pressure=0 results for MoS2 from this article: https://www.pnas.org/doi/full/10.1073/pnas.2010110118.
 
+> [!Note]
+> This example uses an unrealistically sparse k grid.
+
 For useful resources and tutorials, [see here](./resources.md).
 
 ## Main scripts
