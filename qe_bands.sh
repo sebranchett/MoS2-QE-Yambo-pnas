@@ -4,8 +4,8 @@
 #SBATCH --partition=compute
 #SBATCH --account=innovation
 #SBATCH --time=01:00:00
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=24
+#SBATCH --ntasks=24
+#SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=3900MB
 # #SBATCH --mail-type=ALL
 
