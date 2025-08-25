@@ -13,7 +13,7 @@ Quantum Espresso:
 Yambo GW:
 - https://www.yambo-code.eu/wiki/index.php/LiF to create input
 - https://www.yambo-code.eu/wiki/index.php/How_to_obtain_the_quasi-particle_band_structure_of_a_bulk_material:_h-BN for GW calculation and band structure plots
-- https://wiki.yambo-code.eu/wiki/index.php/Self-consistent_GW_on_eigenvalues_only to go further that G0W0
+- https://wiki.yambo-code.eu/wiki/index.php/Self-consistent_GW_on_eigenvalues_only to go further than G0W0
 
 Yambo BSE:
 * https://www.yambo-code.eu/wiki/index.php/Static_screening
