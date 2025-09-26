@@ -36,10 +36,8 @@ Number_conduction_bands_bse=10
 
 # BSENGexx
 Exchange_components_Ry=68
-# VXCRLvcs
-XCpotential_components_Ry=15
-# NGsBlkXs
-Response_block_size_Ry=5
+# BSENGBlk, must be less than or equal to NGsBlkXs in static screening
+Screened_interaction_block_size_Ry=5
 
 # BSEQptR - number of centre of mass momenta of the exciton
 q_min=1
@@ -80,7 +78,7 @@ Upper_band_bse=$((${Highest_valence_band} + ${Number_conduction_bands_bse}))
 rm -f bse.in
 yambo -o b -k sex -y d -F bse.in -J output/BSE
 sed -i "s/BSENGexx.*/BSENGexx= ${Exchange_components_Ry} Ry  # [BSK] Exchange components/" bse.in
-sed -i "s/BSENGBlk.*/BSENGBlk= ${Response_block_size_Ry} Ry  # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]/" bse.in
+sed -i "s/BSENGBlk.*/BSENGBlk= ${Screened_interaction_block_size_Ry} Ry  # [BSK] Screened interaction block size [if -1 uses all the G-vectors of W(q,G,Gp)]/" bse.in
 # BSEBands
 sed -i "s/.*# \[BSK\] Bands range/ ${Lower_band_bse} | ${Upper_band_bse} |  # [BSK] Bands range/" bse.in
 # BSEQptR
