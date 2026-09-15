@@ -13,7 +13,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 module use --append /projects/electronic_structure/.modulefiles
 module load qe
-module load gnuplot
+module load 2026 cpu gnuplot
 
 WORKDIR=${PWD}/qe_bands
 cd "$WORKDIR"
