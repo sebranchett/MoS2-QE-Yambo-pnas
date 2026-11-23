@@ -14,9 +14,12 @@
 
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-module use --append /projects/electronic_structure/.modulefiles
+module purge
+module use /projects/electronic_structure/.modulefiles
 module load qe
-module load yambo
+# prepend yambo
+module use /projects/electronic_structure/yambo_5.3.0_2026/modulefiles
+module load yambo-cpu/5.3.0  # loads as yambo
 
 WORKDIR=${PWD}/MoS2
 cd "$WORKDIR"
